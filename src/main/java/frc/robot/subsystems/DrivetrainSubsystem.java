@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -24,14 +25,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
         leftFalcon2 = new TalonFX(Constants.LEFT_FALCON_2);
         rightFalcon1 = new TalonFX(Constants.RIGHT_FALCON_1);
         rightFalcon2 = new TalonFX(Constants.RIGHT_FALCON_2);
-
         
         leftFalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         rightFalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-//        leftVictor1.set(VictorSPXControlMode.Follower, Constants.LEFT_VICTOR_1);
-//        leftVictor2.set(VictorSPXControlMode.Follower, Constants.LEFT_VICTOR_2);
-//        rightVictor1.set(VictorSPXControlMode.Follower, Constants.RIGHT_VICTOR_1);
-//        rightVictor2.set(VictorSPXControlMode.Follower, Constants.RIGHT_VICTOR_2);
+
+        rightFalcon1.setInverted(true);
+        rightFalcon2.setInverted(true);
+        leftFalcon1.setInverted(false);
+        leftFalcon2.setInverted(false);
+
         leftFalcon1.setNeutralMode(NeutralMode.Brake);
         rightFalcon1.setNeutralMode(NeutralMode.Brake);
         resetEncoders();

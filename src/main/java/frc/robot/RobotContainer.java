@@ -150,24 +150,24 @@ public class RobotContainer {
   }
 
   public double getLeftY() {
-    if(driverStationJoy.getRawAxis(1) >= .1 || driverStationJoy.getRawAxis(1) <= -.1){
+    if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1){
       return driverStationJoy.getRawAxis(1);
     }else{
       return 0;
-    }
+
 
     // return leftJoy.getRawAxis(RobotMap.DRIVERSTATION_LEFT_Y_AXIS);
   }
 
   // Gets the Y direction of the left drive joystick
   public double getLeftX() {
-    return driverStationJoy.getX();
+    return driverStationJoy.getRawAxis(1);
   }
 
   // Gets the Y direction of the right drive joystick
   public double getRightY() {
 
-    if(driverStationJoy.getRawAxis(3) >= .1 || driverStationJoy.getRawAxis(3) <= -.1){
+    if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1){
       return driverStationJoy.getRawAxis(3);
     }else{
       return 0;

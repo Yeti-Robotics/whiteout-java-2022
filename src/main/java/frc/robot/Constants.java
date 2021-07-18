@@ -34,16 +34,11 @@ public final class Constants {
     public static final double DRIVE_WHEEL_DIAMETER = 5.6875; //inches
     public static final double DISTANCE_PER_PULSE = (DRIVE_WHEEL_DIAMETER * Math.PI) / DRIVE_ENCODER_RESOLUTION; //inches
 
-    public static final int LEFT_ENCODER_A = 0;
-    public static final int LEFT_ENCODER_B = 1;
-    public static final int RIGHT_ENCODER_A = 2;
-    public static final int RIGHT_ENCODER_B = 3;
-
     public static final double HIGH_GEAR_RATIO = 9.0/1.0;
     public static final double LOW_GEAR_RATIO = 19.6/1.0;
 
     //intake and hopper constants
-    public static final int INTAKE_VICTOR = 7;
+    public static final int INTAKE_VICTOR = 5;
     public static final int HOPPER_LEFT_VICTOR = 12;
     public static final int HOPPER_RIGHT_VICTOR = 6;
 
@@ -54,8 +49,8 @@ public final class Constants {
     public static final double FUNNEL_OUT_SPEED = -0.75;
 
     //neck constants
-    public static final int NECK_BELT_TALON = 10;
-    public static final int NECK_ROLLER_TALON = 8;
+    public static final int NECK_BELT_TALON = 8;
+    public static final int NECK_ROLLER_TALON = 11;
 
     public static final int UPPER_BEAM_BREAK = 5;
     public static final int LOWER_BEAM_BREAK = 6;
@@ -64,8 +59,8 @@ public final class Constants {
     public static final double NECK_DOWN_SPEED = -0.5;
 
     //shooter constants
-    public static final int SHOOTER_LEFT_TALON = 11; //left
-    public static final int SHOOTER_RIGHT_TALON = 4; //right
+    public static final int SHOOTER_LEFT_TALON = 9; //left
+    public static final int SHOOTER_RIGHT_TALON = 10; //right
     public static final int SHOOTER_SERVO_1 = 8;
     public static final int SHOOTER_SERVO_2 = 9;
     public static final double SERVO_GEAR_RATIO = 32.0 / 96;
@@ -78,8 +73,8 @@ public final class Constants {
 
     public static final int HOOD_TALON = 14;
     //climber constants
-    public static final int LEFT_CLIMBER_TALON = 9; //left
-    public static final int RIGHT_CLIMBER_TALON = 3; //right
+    public static final int LEFT_CLIMBER_TALON = 3; //left
+    public static final int RIGHT_CLIMBER_TALON = 2; //right
 
     public static final double CLIMBER_SPEED = 0.9;
 
