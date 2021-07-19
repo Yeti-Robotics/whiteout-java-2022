@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -17,8 +17,8 @@ public class IntakeSubsystem extends SubsystemBase {
     private DoubleSolenoid pistons;
 
     public IntakeSubsystem() {
-        pistons = new DoubleSolenoid(Constants.INTAKE_PISTONS_SOLENOID[0], Constants.INTAKE_PISTONS_SOLENOID[1]);
-        intakeVictor = new VictorSPX(Constants.INTAKE_VICTOR);
+        pistons = new DoubleSolenoid(IntakeConstants.INTAKE_PISTONS_SOLENOID[0], IntakeConstants.INTAKE_PISTONS_SOLENOID[1]);
+        intakeVictor = new VictorSPX(IntakeConstants.INTAKE_VICTOR);
     }
 
     public void extend(){
@@ -32,11 +32,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void rollIn(){
-        intakeVictor.set(ControlMode.PercentOutput, Constants.ROLL_IN_SPEED);
+        intakeVictor.set(ControlMode.PercentOutput, IntakeConstants.ROLL_IN_SPEED);
     }
 
     public void rollOut(){
-        intakeVictor.set(ControlMode.PercentOutput, Constants.ROLL_OUT_SPEED);
+        intakeVictor.set(ControlMode.PercentOutput, IntakeConstants.ROLL_OUT_SPEED);
     }
 
     public void stopRoll(){

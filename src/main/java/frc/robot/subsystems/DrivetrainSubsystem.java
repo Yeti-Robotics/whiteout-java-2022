@@ -2,29 +2,21 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj.Encoder;
+import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
     private TalonFX leftFalcon1, leftFalcon2, rightFalcon1, rightFalcon2;    
 
     public DrivetrainSubsystem() {
         
-        leftFalcon1 = new TalonFX(Constants.LEFT_FALCON_1);
-        leftFalcon2 = new TalonFX(Constants.LEFT_FALCON_2);
-        rightFalcon1 = new TalonFX(Constants.RIGHT_FALCON_1);
-        rightFalcon2 = new TalonFX(Constants.RIGHT_FALCON_2);
+        leftFalcon1 = new TalonFX(DriveConstants.LEFT_FALCON_1);
+        leftFalcon2 = new TalonFX(DriveConstants.LEFT_FALCON_2);
+        rightFalcon1 = new TalonFX(DriveConstants.RIGHT_FALCON_1);
+        rightFalcon2 = new TalonFX(DriveConstants.RIGHT_FALCON_2);
         
         leftFalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         rightFalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
@@ -60,11 +52,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public double getLeftEncoder() {
-        return (leftFalcon1.getSelectedSensorPosition() * Constants.DISTANCE_PER_PULSE);
+        return (leftFalcon1.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_PULSE);
     }
 
     public double getRightEncoder() {
-        return (-rightFalcon1.getSelectedSensorPosition() * Constants.DISTANCE_PER_PULSE);
+        return (-rightFalcon1.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_PULSE);
     }
 
     public double getAverageEncoder() {
@@ -83,29 +75,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-
-        // System.out.println("drivetrain periodic");
-
-//        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-//        NetworkTableEntry tx = table.getEntry("tx");
-//        NetworkTableEntry ty = table.getEntry("ty");
-//        NetworkTableEntry ta = table.getEntry("ta");
-
-//read values periodically
-//        double x = tx.getDouble(0.0);
-//        double y = ty.getDouble(0.0);
-//        double area = ta.getDouble(0.0);
-
-        // post to smart dashboard periodically
-//        SmartDashboard.putNumber("LimelightX", x);
-//        SmartDashboard.putNumber("LimelightY", y);
-//        SmartDashboard.putNumber("LimelightArea", area);
-
-
-//
-//        System.out.println("Right Encoder: " + getRightEncoder());
-//        System.out.println("Left Encoder: " + getLeftEncoder());
-//        System.out.println("Average Encoder: " + getAverageEncoder());
     }
 
 }

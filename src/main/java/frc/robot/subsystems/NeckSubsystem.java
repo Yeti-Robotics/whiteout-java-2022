@@ -2,10 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.NeckConstants;
 
 public class NeckSubsystem extends SubsystemBase {
     private TalonSRX neckBeltTalon;
@@ -14,20 +13,20 @@ public class NeckSubsystem extends SubsystemBase {
     private DigitalInput upperBeamBreak;
 
     public NeckSubsystem() {
-      neckBeltTalon = new TalonSRX(Constants.NECK_BELT_TALON);
-      neckRollerTalon = new TalonSRX(Constants.NECK_ROLLER_TALON);
-      lowerBeamBreak = new DigitalInput(Constants.LOWER_BEAM_BREAK);
-      upperBeamBreak = new DigitalInput(Constants.UPPER_BEAM_BREAK);
+      neckBeltTalon = new TalonSRX(NeckConstants.NECK_BELT_TALON);
+      neckRollerTalon = new TalonSRX(NeckConstants.NECK_ROLLER_TALON);
+      lowerBeamBreak = new DigitalInput(NeckConstants.LOWER_BEAM_BREAK);
+      upperBeamBreak = new DigitalInput(NeckConstants.UPPER_BEAM_BREAK);
     }
 
     public void moveUp(){
-        neckBeltTalon.set(ControlMode.PercentOutput, Constants.NECK_UP_SPEED);
-        neckRollerTalon.set(ControlMode.PercentOutput, Constants.NECK_UP_SPEED);
+        neckBeltTalon.set(ControlMode.PercentOutput, NeckConstants.NECK_UP_SPEED);
+        neckRollerTalon.set(ControlMode.PercentOutput, NeckConstants.NECK_UP_SPEED);
     }
 
     public void moveDown(){
-        neckBeltTalon.set(ControlMode.PercentOutput, Constants.NECK_DOWN_SPEED);
-        neckRollerTalon.set(ControlMode.PercentOutput, Constants.NECK_DOWN_SPEED);
+        neckBeltTalon.set(ControlMode.PercentOutput, NeckConstants.NECK_DOWN_SPEED);
+        neckRollerTalon.set(ControlMode.PercentOutput, NeckConstants.NECK_DOWN_SPEED);
     }
 
     public void stopNeck(){

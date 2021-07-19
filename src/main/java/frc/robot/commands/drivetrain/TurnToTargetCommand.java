@@ -3,7 +3,7 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.utils.Limelight;
 import org.opencv.core.Mat;
@@ -18,7 +18,7 @@ public class TurnToTargetCommand extends PIDCommand {
 
     public TurnToTargetCommand(DrivetrainSubsystem drivetrainSubsystem) {
         super(
-                new PIDController(Constants.kTurnP, Constants.kTurnI, Constants.kTurnD),
+                new PIDController( DriveConstants.kTurnP,  DriveConstants.kTurnI,  DriveConstants.kTurnD),
                 // Close loop on heading
                 //drivetrainSubsystem::drive,
                 // Set reference to target

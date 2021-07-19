@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.OIConstants;
 import frc.robot.autoRoutines.ShootCommandGroup;
 import frc.robot.autoRoutines.ShootWithTurnCommandGroup;
 import frc.robot.commands.climbing.ClimbDownCommand;
@@ -60,8 +61,7 @@ public class RobotContainer {
   // private DoubleButton toggleClimb;
 
   public RobotContainer() {
-    driverStationJoy = new Joystick(Constants.DRIVER_STATION_JOY);
-    servoJoy = new Joystick(1);
+    driverStationJoy = new Joystick(OIConstants.DRIVER_STATION_JOY);
 
     drivetrainSubsystem = new DrivetrainSubsystem();
     intakeSubsystem = new IntakeSubsystem();
@@ -75,74 +75,11 @@ public class RobotContainer {
 
     //enable this to drive!!
     drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
-////
-//    shooterSubsystem.setDefaultCommand(new RunCommand(() -> shooterSubsystem.moveServo(getLeftY() ), shooterSubsystem));
-
-//    shooterSubsystem.setDefaultCommand(
-//        new RunCommand(() -> shooterSubsystem.setHoodAngle(getLeftThrottle() * 180), shooterSubsystem));
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-
-    //Intake Pistons
-    setJoystickButtonWhenPressed(driverStationJoy, 6, new ToggleIntakeCommand(intakeSubsystem));
-
-    //Intake, Hopper, Neck (no shooter)
-    setJoystickButtonWhileHeld(driverStationJoy, 7, new ParallelCommandGroup(
-            new IntakeInCommand(intakeSubsystem),
-            new MoveUpNeckCommand(neckSubsystem),
-            new HopperInCommand(hopperSubsystem)));
-
-    //Runs intake and hopper
-    setJoystickButtonWhileHeld(driverStationJoy, 8, new ParallelCommandGroup(
-      new IntakeInCommand(intakeSubsystem),
-      new HopperInCommand(hopperSubsystem)));
-      
-    //shooter toggle
-    setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleShooterCommand(shooterSubsystem));
-
-    //Intake, Hopper, Tower, Shooter (all)
-    setJoystickButtonWhileHeld(driverStationJoy, 10, new ParallelCommandGroup(
-            new IntakeInCommand(intakeSubsystem),
-            new HopperInCommand(hopperSubsystem),
-            new MoveUpNeckCommand(neckSubsystem),
-            new SpinWithStopCommand(shooterSubsystem))
-    );
-
-    //runs everything but shooter backwards
-    setJoystickButtonWhileHeld(driverStationJoy, 1, new ParallelCommandGroup(
-      new IntakeOutCommand(intakeSubsystem),
-      new HopperOutCommand(hopperSubsystem),
-      new MoveDownNeckCommand(neckSubsystem)
-    ));
-    
-    //Climber Up
-//    setJoystickButtonWhileHeld(driverStationJoy, 2, new ClimbUpCommand(climberSubsystem));
-
-    //Climbs Down
-//    setJoystickButtonWhileHeld(driverStationJoy, 3, new ClimbDownCommand(climberSubsystem));
-
-    //intake in
-//    setJoystickButtonWhileHeld(driverStationJoy, 4, new IntakeInCommand(intakeSubsystem));
-
-    setJoystickButtonWhileHeld(driverStationJoy, 2, new TestHoodMotorCommand(shooterSubsystem, 0.05));
-    setJoystickButtonWhileHeld(driverStationJoy, 3, new TestHoodMotorCommand(shooterSubsystem, -0.05));
-
-
-    setJoystickButtonWhenPressed(driverStationJoy, 4, new ExtendIntakeCommand(intakeSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoy, 5, new TestServoCommand(shooterSubsystem));
-
-
-    //intake reverse
-//    setJoystickButtonWhileHeld(driverStationJoy, 5, new IntakeOutCommand(intakeSubsystem));
-
-    //Shift Gears
-    setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftingCommand(shiftGearsSubsystem));
-
-    //Turn to target No PID
-    setJoystickButtonWhenPressed(driverStationJoy, 12, new TurnNoPIDCommand(drivetrainSubsystem, limelight));
-
+    //TODO: Configure Button Bindings
   }
 
   public double getServoThrottle() {
@@ -154,17 +91,13 @@ public class RobotContainer {
       return driverStationJoy.getRawAxis(1);
     }else{
       return 0;
-
-
-    // return leftJoy.getRawAxis(RobotMap.DRIVERSTATION_LEFT_Y_AXIS);
+    }
   }
 
-  // Gets the Y direction of the left drive joystick
   public double getLeftX() {
     return driverStationJoy.getRawAxis(1);
   }
 
-  // Gets the Y direction of the right drive joystick
   public double getRightY() {
 
     if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1){
@@ -172,10 +105,8 @@ public class RobotContainer {
     }else{
       return 0;
     }
-    // return rightJoy.getRawAxis(RobotMap.DRIVERSTATION_RIGHT_Y_AXIS);
   }
 
-  // Gets the X direction of the right drive joystick
   public double getRightX() {
     return driverStationJoy.getX();
   }
@@ -191,17 +122,4 @@ public class RobotContainer {
   private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whileHeld(command);
   }
-
-  // playing with pressing both buttons to execute a command different from the
-  // command bound to pressing a button by itself
-  // private void setJoystickButtonsWhileHeld(Joystick joystick, int button1, int
-  // button2, Command command){
-  // JoystickButton ButtonOne = new JoystickButton(joystick, button1);
-  // JoystickButton ButtonTwo = new JoystickButton(joystick, button2);
-  // DoubleButton doubleButton = new DoubleButton(ButtonOne, ButtonTwo);
-  // doubleButton.whileHeld(command);
-  // }
-
-  //Hood angle that doesn't work
-//        setJoystickButtonWhileHeld(driverStationJoy, 3, new SetHoodAngleCommand(shooterSubsystem, 90));
 }
