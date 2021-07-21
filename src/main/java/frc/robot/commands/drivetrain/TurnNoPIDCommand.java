@@ -24,10 +24,10 @@ public class TurnNoPIDCommand extends CommandBase {
     public void execute() {
         System.out.println(limelight.getTx());
         if(limelight.getTx()<0){
-            drivetrainSubsystem.drive(-0.2,0.2);
+            drivetrainSubsystem.tankDrive(-0.2,0.2);
             System.out.println("turning left");
         }else if(limelight.getTx()>0){
-            drivetrainSubsystem.drive(0.2,-0.2);
+            drivetrainSubsystem.tankDrive(0.2,-0.2);
             System.out.println("turning right");
         }
     }

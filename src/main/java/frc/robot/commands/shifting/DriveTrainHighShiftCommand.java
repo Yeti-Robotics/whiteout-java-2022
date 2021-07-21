@@ -1,15 +1,15 @@
 package frc.robot.commands.shifting;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShiftGearsSubsystem;
+import frc.robot.subsystems.ShiftingGearsSubsystem;
 
 
 public class DriveTrainHighShiftCommand extends CommandBase {
-    private final ShiftGearsSubsystem shiftGearsSubsystem;
+    private final ShiftingGearsSubsystem shiftingGearsSubsystem;
 
-    public DriveTrainHighShiftCommand(ShiftGearsSubsystem shiftGearsSubsystem) {
-        this.shiftGearsSubsystem = shiftGearsSubsystem;
-        addRequirements(shiftGearsSubsystem);
+    public DriveTrainHighShiftCommand(ShiftingGearsSubsystem shiftingGearsSubsystem) {
+        this.shiftingGearsSubsystem = shiftingGearsSubsystem;
+        addRequirements(shiftingGearsSubsystem);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class DriveTrainHighShiftCommand extends CommandBase {
 
     @Override
     public void execute() {
-        shiftGearsSubsystem.shiftUp();
+        shiftingGearsSubsystem.shiftUp();
     }
 
     @Override

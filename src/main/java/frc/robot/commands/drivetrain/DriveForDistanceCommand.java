@@ -20,12 +20,12 @@ public class DriveForDistanceCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        drivetrainSubsystem.resetEncoder();
+        drivetrainSubsystem.resetEncoders();
     }
 
     @Override
     public void execute() {
-        drivetrainSubsystem.drive(leftPower, rightPower);
+        drivetrainSubsystem.tankDrive(leftPower, rightPower);
         System.out.println("Distance" + distanceGoal + "; Encoder" + this.drivetrainSubsystem.getAverageEncoder());
     }
 

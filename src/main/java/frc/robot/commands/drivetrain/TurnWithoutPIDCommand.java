@@ -23,10 +23,10 @@ public class TurnWithoutPIDCommand extends CommandBase {
     @Override
     public void execute() {
         if(limelight.getTx()<0){
-            drivetrainSubsystem.drive(-0.4,0.4);
+            drivetrainSubsystem.tankDrive(-0.4,0.4);
             System.out.println("turning left");
         }else if(limelight.getTx()>0){
-            drivetrainSubsystem.drive(0.4,-0.4);
+            drivetrainSubsystem.tankDrive(0.4,-0.4);
             System.out.println("turning right");
         }
     }

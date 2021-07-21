@@ -14,7 +14,7 @@ public class ResetEncodersCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        drivetrainSubsystem.resetEncoder();
+        drivetrainSubsystem.resetEncoders();
     }
 
     @Override

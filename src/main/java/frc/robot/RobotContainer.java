@@ -56,7 +56,7 @@ public class RobotContainer {
   public ShooterSubsystem shooterSubsystem;
   public HopperSubsystem hopperSubsystem;
   public ClimberSubsystem climberSubsystem;
-  public ShiftGearsSubsystem shiftGearsSubsystem;
+  public ShiftingGearsSubsystem shiftingGearsSubsystem;
   public Limelight limelight;
   // private DoubleButton toggleClimb;
 
@@ -68,14 +68,23 @@ public class RobotContainer {
     neckSubsystem = new NeckSubsystem();
     shooterSubsystem = new ShooterSubsystem();
     hopperSubsystem = new HopperSubsystem();
-    shiftGearsSubsystem = new ShiftGearsSubsystem();
+    shiftingGearsSubsystem = new ShiftingGearsSubsystem();
     climberSubsystem = new ClimberSubsystem();
     limelight = new Limelight();
 
 
     //enable this to drive!!
-    drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
-    configureButtonBindings();
+    switch (drivetrainSubsystem.getDriveMode()) {
+      case TANK:
+          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+          break;
+      case CHEEZY:
+          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+          break;
+      case ARCADE:
+          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+    }    
+  configureButtonBindings();
   }
 
   private void configureButtonBindings() {

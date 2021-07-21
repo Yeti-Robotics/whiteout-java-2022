@@ -2,8 +2,6 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShiftGearsSubsystem;
-
 
 public class ToggleIntakeCommand extends CommandBase {
     private final IntakeSubsystem intakeSubsystem;

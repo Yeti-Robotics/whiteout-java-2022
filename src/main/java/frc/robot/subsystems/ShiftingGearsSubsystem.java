@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
-public class ShiftGearsSubsystem extends SubsystemBase {
+public class ShiftingGearsSubsystem extends SubsystemBase {
     private DoubleSolenoid shifter;
     public enum ShiftStatus{
         HIGH, LOW
     }
     public static ShiftStatus shiftStatus;
 
-    public ShiftGearsSubsystem() {
+    public ShiftingGearsSubsystem() {
         shifter = new DoubleSolenoid(DriveConstants.SHIFTER_SOLENOID[0], DriveConstants.SHIFTER_SOLENOID[1]);
         shiftStatus = ShiftStatus.LOW;
     }
