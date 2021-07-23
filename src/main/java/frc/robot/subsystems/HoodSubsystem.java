@@ -61,6 +61,6 @@ public class HoodSubsystem extends SubsystemBase {
 
    public double calcHoodAngle(double distance) {
      //y = mx+b values based on hood testing
-     return ((.0867898* distance) + 12.4589);
+     return ((.0867898 * distance) + 12.4589);
    }
 }

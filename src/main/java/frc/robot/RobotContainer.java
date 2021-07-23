@@ -16,17 +16,21 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.autoRoutines.ShootCommandGroup;
 import frc.robot.autoRoutines.ShootWithTurnCommandGroup;
+import frc.robot.commands.AllInCommand;
+import frc.robot.commands.AllOutCommand;
 import frc.robot.commands.climbing.ClimbDownCommand;
 import frc.robot.commands.climbing.ClimbUpCommand;
 import frc.robot.commands.drivetrain.DriveForDistanceCommand;
 import frc.robot.commands.drivetrain.ResetEncodersCommand;
 import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.commands.drivetrain.TurnNoPIDCommand;
+import frc.robot.commands.hood.MoveHoodCommand;
 import frc.robot.commands.hopper.HopperOutCommand;
 import frc.robot.commands.hopper.StopFunnelCommand;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.neck.MoveDownNeckCommand;
 import frc.robot.commands.neck.StopNeckCommand;
+import frc.robot.commands.neck.TowerClearCommand;
 import frc.robot.commands.shifting.ToggleShiftingCommand;
 import frc.robot.commands.neck.MoveUpNeckCommand;
 import frc.robot.commands.hopper.HopperInCommand;
@@ -55,6 +59,7 @@ public class RobotContainer {
   public NeckSubsystem neckSubsystem;
   public ShooterSubsystem shooterSubsystem;
   public HopperSubsystem hopperSubsystem;
+  public HoodSubsystem hoodSubsystem;
   public ClimberSubsystem climberSubsystem;
   public ShiftingGearsSubsystem shiftingGearsSubsystem;
   public Limelight limelight;
@@ -63,11 +68,13 @@ public class RobotContainer {
   public RobotContainer() {
     driverStationJoy = new Joystick(OIConstants.DRIVER_STATION_JOY);
 
+
     drivetrainSubsystem = new DrivetrainSubsystem();
     intakeSubsystem = new IntakeSubsystem();
     neckSubsystem = new NeckSubsystem();
     shooterSubsystem = new ShooterSubsystem();
     hopperSubsystem = new HopperSubsystem();
+    hoodSubsystem = new HoodSubsystem();
     shiftingGearsSubsystem = new ShiftingGearsSubsystem();
     climberSubsystem = new ClimberSubsystem();
     limelight = new Limelight();
@@ -88,7 +95,17 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    //TODO: Configure Button Bindings
+    setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleIntakeCommand(intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 3, new MoveHoodCommand(hoodSubsystem, -0.1));
+    setJoystickButtonWhenPressed(driverStationJoy, 4, new TurnNoPIDCommand(drivetrainSubsystem, limelight)); // should change this to AimToShootCommandGroup (aims hood as well)
+    setJoystickButtonWhenPressed(driverStationJoy, 5, new ClimbDownCommand(climberSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 7, new TowerClearCommand(neckSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 8, new MoveHoodCommand(hoodSubsystem, 0.1));
+    setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleShooterCommand(shooterSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 10, new ClimbUpCommand(climberSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftingCommand(shiftingGearsSubsystem));
   }
 
   public double getServoThrottle() {
@@ -98,7 +115,7 @@ public class RobotContainer {
   public double getLeftY() {
     if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1){
       return driverStationJoy.getRawAxis(1);
-    }else{
+    } else {
       return 0;
     }
   }
@@ -111,7 +128,7 @@ public class RobotContainer {
 
     if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1){
       return driverStationJoy.getRawAxis(3);
-    }else{
+    } else {
       return 0;
     }
   }
