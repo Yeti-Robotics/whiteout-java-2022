@@ -8,26 +8,23 @@ import frc.robot.Constants.HopperConstants;
 
 public class HopperSubsystem extends SubsystemBase {
 
-    private VictorSPX hopperVictorLeft, hopperVictorRight;
+    private VictorSPX hopperVictor;
 
     public HopperSubsystem() {
-        hopperVictorLeft = new VictorSPX(HopperConstants.HOPPER_LEFT_VICTOR);
-        hopperVictorRight = new VictorSPX(HopperConstants.HOPPER_RIGHT_VICTOR);
+        hopperVictor = new VictorSPX(HopperConstants.HOPPER_VICTOR);
+        hopperVictor.setInverted(true);
     }
 
     public void funnelIn() {
-        hopperVictorLeft.set(ControlMode.PercentOutput, HopperConstants.FUNNEL_IN_SPEED);
-        hopperVictorRight.set(ControlMode.PercentOutput, -HopperConstants.FUNNEL_IN_SPEED);
+        hopperVictor.set(ControlMode.PercentOutput, HopperConstants.FUNNEL_IN_SPEED);
     }
 
     public void funnelOut() {
-        hopperVictorLeft.set(ControlMode.PercentOutput, HopperConstants.FUNNEL_OUT_SPEED);
-        hopperVictorRight.set(ControlMode.PercentOutput, -HopperConstants.FUNNEL_OUT_SPEED);
+        hopperVictor.set(ControlMode.PercentOutput, HopperConstants.FUNNEL_OUT_SPEED);
     }
 
     public void funnelStop() {
-        hopperVictorLeft.set(ControlMode.PercentOutput, 0);
-        hopperVictorRight.set(ControlMode.PercentOutput, 0);
+        hopperVictor.set(ControlMode.PercentOutput, 0);
     }
 }
 

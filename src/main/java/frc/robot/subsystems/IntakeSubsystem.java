@@ -19,6 +19,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
         pistons = new DoubleSolenoid(IntakeConstants.INTAKE_PISTONS_SOLENOID[0], IntakeConstants.INTAKE_PISTONS_SOLENOID[1]);
         intakeVictor = new VictorSPX(IntakeConstants.INTAKE_VICTOR);
+        intakeVictor.setInverted(true);
     }
 
     public void extend(){

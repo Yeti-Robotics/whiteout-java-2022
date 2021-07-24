@@ -24,10 +24,12 @@ public class TowerClearCommand extends CommandBase {
   public void execute() {}
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted){
+    this.neckSubsystem.stopNeck();
+  }
 
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

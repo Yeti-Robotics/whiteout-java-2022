@@ -26,7 +26,7 @@ public final class Constants {
         public static final int LEFT_FALCON_1 = 15;
         public static final int LEFT_FALCON_2 = 14;
         public static final int RIGHT_FALCON_1 = 0;
-        public static final int RIGHT_FALCON_2 =1;
+        public static final int RIGHT_FALCON_2 = 1;
 
         //shifter solenoid ports
         public static final int[] SHIFTER_SOLENOID = {0,1};
@@ -60,8 +60,7 @@ public final class Constants {
 
     public static final class HopperConstants {
         //hopper motor ports
-        public static final int HOPPER_LEFT_VICTOR = 12;
-        public static final int HOPPER_RIGHT_VICTOR = 6;
+        public static final int HOPPER_VICTOR = 4;
 
         //hopper motor speed
         public static final double FUNNEL_IN_SPEED = 0.75;
@@ -74,8 +73,8 @@ public final class Constants {
         public static final int NECK_ROLLER_TALON = 11;
 
         //beam break sensor dio ports
-        public static final int UPPER_BEAM_BREAK = 5;
-        public static final int LOWER_BEAM_BREAK = 6;
+        public static final int UPPER_BEAM_BREAK = 0;
+        public static final int LOWER_BEAM_BREAK = 2;
 
         //neck motor speed
         public static final double NECK_UP_SPEED = 0.5;
@@ -96,7 +95,7 @@ public final class Constants {
 
     public static final class HoodConstants{
         //hood motor port
-        public static final int HOOD_SPARK = 11;
+        public static final int HOOD_SPARK = 7;
 
         //hood calc constants
         public static final double COUNTS_PER_REVOLUTION = 42.0;

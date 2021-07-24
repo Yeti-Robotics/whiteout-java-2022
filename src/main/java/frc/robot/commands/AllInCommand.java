@@ -32,10 +32,14 @@ public class AllInCommand extends CommandBase {
   public void execute() {}
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted){
+    this.intakeSubsystem.stopRoll();
+    this.hopperSubsystem.funnelStop();
+    this.neckSubsystem.stopNeck();
+  }
 
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

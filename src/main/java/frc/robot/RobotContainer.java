@@ -24,7 +24,9 @@ import frc.robot.commands.drivetrain.DriveForDistanceCommand;
 import frc.robot.commands.drivetrain.ResetEncodersCommand;
 import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.commands.drivetrain.TurnNoPIDCommand;
+import frc.robot.commands.groups.AimToShootCommandGroup;
 import frc.robot.commands.hood.MoveHoodCommand;
+import frc.robot.commands.hood.ResetHoodEncoderCommand;
 import frc.robot.commands.hopper.HopperOutCommand;
 import frc.robot.commands.hopper.StopFunnelCommand;
 import frc.robot.commands.intake.*;
@@ -68,7 +70,6 @@ public class RobotContainer {
   public RobotContainer() {
     driverStationJoy = new Joystick(OIConstants.DRIVER_STATION_JOY);
 
-
     drivetrainSubsystem = new DrivetrainSubsystem();
     intakeSubsystem = new IntakeSubsystem();
     neckSubsystem = new NeckSubsystem();
@@ -83,28 +84,34 @@ public class RobotContainer {
     //enable this to drive!!
     switch (drivetrainSubsystem.getDriveMode()) {
       case TANK:
-          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
-          break;
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+        break;
       case CHEEZY:
-          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
-          break;
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        break;
       case ARCADE:
-          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        break;
+      default:
+        // tank 
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+        break;
     }    
-  configureButtonBindings();
+    configureButtonBindings();
   }
 
   private void configureButtonBindings() {
     setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    //setJoystickButtonWhenPressed(driverStationJoy, 1, new ResetHoodEncoderCommand(hoodSubsystem)); // Allison wanted this made, we're not sure why
     setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleIntakeCommand(intakeSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 3, new MoveHoodCommand(hoodSubsystem, -0.1));
-    setJoystickButtonWhenPressed(driverStationJoy, 4, new TurnNoPIDCommand(drivetrainSubsystem, limelight)); // should change this to AimToShootCommandGroup (aims hood as well)
-    setJoystickButtonWhenPressed(driverStationJoy, 5, new ClimbDownCommand(climberSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 3, new MoveHoodCommand(hoodSubsystem, 0.1)); // doesnt work?
+    setJoystickButtonWhenPressed(driverStationJoy, 4, new AimToShootCommandGroup(drivetrainSubsystem, hoodSubsystem)); // AimToShoot not written yet
+    // setJoystickButtonWhenPressed(driverStationJoy, 5, new ClimbDownCommand(climberSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 7, new TowerClearCommand(neckSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 8, new MoveHoodCommand(hoodSubsystem, 0.1));
+    setJoystickButtonWhileHeld(driverStationJoy, 7, new TowerClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
+    setJoystickButtonWhileHeld(driverStationJoy, 8, new MoveHoodCommand(hoodSubsystem, -0.1)); // hood in
     setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleShooterCommand(shooterSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoy, 10, new ClimbUpCommand(climberSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoy, 10, new ClimbUpCommand(climberSubsystem));
     setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftingCommand(shiftingGearsSubsystem));
   }
 
