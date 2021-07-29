@@ -69,8 +69,8 @@ public final class Constants {
 
     public static final class NeckConstants{
         //neck motor ports
-        public static final int NECK_BELT_TALON = 8;
-        public static final int NECK_ROLLER_TALON = 11;
+        public static final int NECK_BELT_VICTOR = 8;
+        public static final int NECK_ROLLER_VICTOR = 11;
 
         //beam break sensor dio ports
         public static final int UPPER_BEAM_BREAK = 0;

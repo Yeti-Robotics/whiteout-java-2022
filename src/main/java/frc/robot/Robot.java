@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    // System.out.println("lower: " + robotContainer.neckSubsystem.getLowerBeamBreak() + "\nupper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
+    System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
     System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
     CommandScheduler.getInstance().run();
   }
@@ -57,10 +57,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    
   }
 
   @Override
   public void disabledPeriodic() {
+    robotContainer.hoodSubsystem.resetEncoder();
   }
 
   /**

@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HoodSubsystem;
 
 public class MoveHoodCommand extends CommandBase {
-  HoodSubsystem hoodSubsystem;
-  double power;
+  private HoodSubsystem hoodSubsystem;
+  private double power;
   /** Creates a new TestHoodCommand. */
   public MoveHoodCommand(HoodSubsystem hoodSubsystem, double power) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.hoodSubsystem = hoodSubsystem;
     this.power = power;
+    addRequirements(hoodSubsystem);
   }
 
   // Called when the command is initially scheduled.
