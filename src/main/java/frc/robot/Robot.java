@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utils.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -46,8 +47,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
-    System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
+    // System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
+    // System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
+    System.out.println("limelight gettx: " + Limelight.getTx());
     CommandScheduler.getInstance().run();
   }
 

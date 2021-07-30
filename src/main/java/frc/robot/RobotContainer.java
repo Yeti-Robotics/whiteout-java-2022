@@ -24,6 +24,7 @@ import frc.robot.commands.drivetrain.DriveForDistanceCommand;
 import frc.robot.commands.drivetrain.ResetEncodersCommand;
 import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.commands.drivetrain.TurnNoPIDCommand;
+import frc.robot.commands.drivetrain.TurnToTargetPIDCommand;
 import frc.robot.commands.groups.AimToShootCommandGroup;
 import frc.robot.commands.hood.MoveHoodCommand;
 import frc.robot.commands.hood.ResetHoodEncoderCommand;
@@ -101,15 +102,16 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    // setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 1, new TurnToTargetPIDCommand(drivetrainSubsystem));
     //setJoystickButtonWhenPressed(driverStationJoy, 1, new ResetHoodEncoderCommand(hoodSubsystem)); // Allison wanted this made, we're not sure why
     setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleIntakeCommand(intakeSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 3, new MoveHoodCommand(hoodSubsystem, 0.1)); // doesnt work?
+    setJoystickButtonWhileHeld(driverStationJoy, 3, new MoveHoodCommand(hoodSubsystem, -0.1)); // hood out
     setJoystickButtonWhenPressed(driverStationJoy, 4, new AimToShootCommandGroup(drivetrainSubsystem, hoodSubsystem)); // AimToShoot not written yet
     // setJoystickButtonWhenPressed(driverStationJoy, 5, new ClimbDownCommand(climberSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 7, new TowerClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
-    setJoystickButtonWhileHeld(driverStationJoy, 8, new MoveHoodCommand(hoodSubsystem, -0.1)); // hood in
+    setJoystickButtonWhileHeld(driverStationJoy, 8, new MoveHoodCommand(hoodSubsystem, 0.1)); // hood in
     setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleShooterCommand(shooterSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoy, 10, new ClimbUpCommand(climberSubsystem));
     setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftingCommand(shiftingGearsSubsystem));
@@ -120,11 +122,11 @@ public class RobotContainer {
   }
 
   public double getLeftY() {
-    if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1){
-      return driverStationJoy.getRawAxis(1);
-    } else {
-      return 0;
-    }
+    // if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1){
+      return -driverStationJoy.getRawAxis(0);
+    // } else {
+    //   return 0;
+    // }
   }
 
   public double getLeftX() {
@@ -133,15 +135,15 @@ public class RobotContainer {
 
   public double getRightY() {
 
-    if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1){
-      return driverStationJoy.getRawAxis(3);
-    } else {
-      return 0;
-    }
+    // if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1){
+      return -driverStationJoy.getRawAxis(2);
+    // } else {
+    //   return 0;
+    // }
   }
 
   public double getRightX() {
-    return driverStationJoy.getX();
+    return driverStationJoy.getRawAxis(3);
   }
 
   public double getLeftThrottle() {

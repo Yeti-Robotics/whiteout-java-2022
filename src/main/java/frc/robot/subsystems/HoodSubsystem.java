@@ -22,12 +22,13 @@ public class HoodSubsystem extends SubsystemBase {
     hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  
     hoodEncoder = hoodSpark.getEncoder();
     hoodSpark.setInverted(false);
-    // hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
-    // hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0));
+    hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
+    hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0));
   }
 
   @Override
   public void periodic() {
+    System.out.println("upper limit: " + hoodSpark.getSoftLimit(SoftLimitDirection.kForward) + "; lower limit: " + hoodSpark.getSoftLimit(SoftLimitDirection.kReverse) );
   }
 
   public void moveHood(double power) {

@@ -26,6 +26,7 @@ public class MoveHoodCommand extends CommandBase {
   public void execute() {
     hoodSubsystem.moveHood(power);
     System.out.println("hood angle: " + hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder()));
+    // System.out.println("hood position: " + hoodSubsystem.getEncoder());
   }
 
   // Called once the command ends or is interrupted.
