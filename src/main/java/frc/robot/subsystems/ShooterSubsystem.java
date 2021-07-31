@@ -17,12 +17,12 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonSRX shooterRightTalon;
 //    public Servo hoodServo1;
 //    public Servo hoodServo2;
-    public TalonSRX hoodTalon;
     private double distance;
     public enum ShooterStatus{
         FORWARD, BACKWARDS, OFF
     }
     public static ShooterStatus shooterStatus;
+    
     public ShooterSubsystem() {
         shooterLeftTalon = new TalonSRX(ShooterConstants.SHOOTER_LEFT_TALON);
         shooterRightTalon = new TalonSRX(ShooterConstants.SHOOTER_RIGHT_TALON);
@@ -61,33 +61,12 @@ public class ShooterSubsystem extends SubsystemBase {
         return (getLeftEncoder() + getRightEncoder()) / 2;
     }
 
-    public void setHoodAngle(double angle) {
-        if (hoodTalon.getSelectedSensorPosition() != angle) {
-            hoodTalon.set(ControlMode.PercentOutput, 0.2);
-        } else {
-            hoodTalon.set(ControlMode.PercentOutput, 0.0);
-        }
-
-    }
-
-    public void moveHood(double power) {
-        hoodTalon.set(ControlMode.PercentOutput, power);
-    }
-
-    public void stopHood() {
-        hoodTalon.set(ControlMode.PercentOutput, 0.0);
-    }
-
-    public static ShooterStatus getShooterStatus(){
-        return shooterStatus;
-    }
-
-    public double calcHoodAngle() {
-        return Math.toDegrees(Math.asin( -CalcConstants.GRAVITY * distance) / ShooterConstants.SHOOT_1_SPEED);
-    }
-
     public double getSpeed() {
         return shooterLeftTalon.getMotorOutputPercent();
+    }
+
+    public double getFlywheelRPM() {
+        return getAverageEncoder() * ShooterConstants.PULLEY_RATIO * (ShooterConstants.ENCODER_TIME_CONVERSION / ShooterConstants.ENCODER_RESOLUTION);
     }
 
     @Override

@@ -91,6 +91,11 @@ public final class Constants {
         public static final double SHOOT_2_SPEED = .9;
         public static final double REVERSE_SHOOT_1_SPEED = -0.5;
         public static final double REVERSE_SHOOT_2_SPEED = -0.5;
+
+        //shooter rpm calc constants
+        public static final double PULLEY_RATIO= 48.0 / 36.0;
+        public static final double ENCODER_TIME_CONVERSION = 600.0;
+        public static final double ENCODER_RESOLUTION = 4096.0;
     }
 
     public static final class HoodConstants{
