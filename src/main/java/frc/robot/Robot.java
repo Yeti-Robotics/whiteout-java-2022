@@ -49,7 +49,9 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
     // System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
-    System.out.println("limelight gettx: " + Limelight.getTx());
+    // System.out.println("limelight gettx: " + Limelight.getTx());
+
+    System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
     CommandScheduler.getInstance().run();
   }
 
@@ -64,7 +66,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    robotContainer.hoodSubsystem.resetEncoder();
+    // if (robotContainer.hoodSubsystem.getBeamBreak()) {
+    //   robotContainer.hoodSubsystem.resetEncoder();
+    // }
   }
 
   /**

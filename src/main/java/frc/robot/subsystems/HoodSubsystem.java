@@ -10,25 +10,27 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HoodConstants;
 
 public class HoodSubsystem extends SubsystemBase {
   private CANSparkMax hoodSpark;
   private CANEncoder hoodEncoder;
-  private CANDigitalInput beamBreak;
+  private DigitalInput beamBreak;
 
   public HoodSubsystem() {
     hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  
     hoodEncoder = hoodSpark.getEncoder();
+    // beamBreak = new DigitalInput(0);
     hoodSpark.setInverted(false);
     hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
     hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0));
   }
 
   @Override
+
   public void periodic() {
-    System.out.println("upper limit: " + hoodSpark.getSoftLimit(SoftLimitDirection.kForward) + "; lower limit: " + hoodSpark.getSoftLimit(SoftLimitDirection.kReverse) );
   }
 
   public void moveHood(double power) {
@@ -56,9 +58,9 @@ public class HoodSubsystem extends SubsystemBase {
   }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
   //the beam break indicates whether the hood has reached its limit or not (outside of hard/soft limits)
-  public boolean getBeamBreak(){
-    return beamBreak.get();
-  }
+  // public boolean getBeamBreak(){
+  //   return beamBreak.get();
+  // }
 
    public double calcHoodAngle(double distance) {
      //y = mx+b values based on hood testing

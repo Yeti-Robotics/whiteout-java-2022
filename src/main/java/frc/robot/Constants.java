@@ -77,7 +77,7 @@ public final class Constants {
         public static final int LOWER_BEAM_BREAK = 2;
 
         //neck motor speed
-        public static final double NECK_UP_SPEED = 0.5;
+        public static final double NECK_UP_SPEED = 0.75;
         public static final double NECK_DOWN_SPEED = -0.5;
     }
 
@@ -86,16 +86,18 @@ public final class Constants {
         public static final int SHOOTER_LEFT_TALON = 9; //left
         public static final int SHOOTER_RIGHT_TALON = 10; //right
 
-        //shooter motor speeds
-        public static final double SHOOT_1_SPEED = .9;
+        //shooter motor speeds    
+        public static final double SHOOT_1_SPEED = .75;
         public static final double SHOOT_2_SPEED = .9;
         public static final double REVERSE_SHOOT_1_SPEED = -0.5;
         public static final double REVERSE_SHOOT_2_SPEED = -0.5;
 
         //shooter rpm calc constants
-        public static final double PULLEY_RATIO= 48.0 / 36.0;
-        public static final double ENCODER_TIME_CONVERSION = 600.0;
-        public static final double ENCODER_RESOLUTION = 4096.0;
+        public static final double PULLEY_RATIO = 12.0 / 48.0;
+        public static final double ENCODER_TIME_CONVERSION = 600.0; // 100 ms per minute
+        public static final double ENCODER_RESOLUTION = 12.0;
+        public static final double QUAD_FACTOR = 4.0; // quadrature encoder factor
+        public static final double MAX_RPM = 1425.0;
     }
 
     public static final class HoodConstants{

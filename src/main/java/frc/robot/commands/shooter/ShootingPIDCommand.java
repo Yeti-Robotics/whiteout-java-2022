@@ -2,10 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.shooting;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -17,20 +18,22 @@ public class ShootingPIDCommand extends PIDCommand {
   public ShootingPIDCommand(ShooterSubsystem shooterSubsystem) {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(0.1, 0, 0),
         // This should return the measurement
-        shooterSubsystem.getAverageEncoder(),
+        shooterSubsystem::getFlywheelRPM,
         // This should return the setpoint (can also be a constant)
-        () -> 0,
+        ShooterConstants.MAX_RPM,
         // This uses the output
         output -> {
-          // Use the output here
+          System.out.println("shooting PID output: " + output);
+          shooterSubsystem.shootFlywheel(output);
         });
             
     this.shooterSubsystem = shooterSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooterSubsystem);
     // Configure additional PID options by calling `getController` here.
+    getController().setTolerance(10);
   }
 
   // Returns true when the command should end.
