@@ -8,7 +8,7 @@ import frc.robot.commands.drivetrain.TurnNoPIDCommand;
 import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.neck.MoveUpNeckCommand;
-import frc.robot.commands.shooting.StartSpinCommand;
+import frc.robot.commands.shooter.StartSpinCommand;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeckSubsystem;

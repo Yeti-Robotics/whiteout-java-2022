@@ -55,6 +55,7 @@ public class HoodSubsystem extends SubsystemBase {
     return hoodEncoder.getPosition();
   }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
+  //the beam break indicates whether the hood has reached its limit or not (outside of hard/soft limits)
   public boolean getBeamBreak(){
     return beamBreak.get();
   }

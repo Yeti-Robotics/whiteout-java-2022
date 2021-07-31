@@ -1,13 +1,15 @@
-package frc.robot.commands.shooting;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
-public class SpinWithStopCommand extends CommandBase {
+public class StartSpinCommand extends CommandBase {
+
     private final ShooterSubsystem shooterSubsystem;
 
-    public SpinWithStopCommand(ShooterSubsystem shooterSubsystem) {
+    public StartSpinCommand(ShooterSubsystem shooterSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
         addRequirements(shooterSubsystem);
     }
@@ -24,11 +26,11 @@ public class SpinWithStopCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return Math.abs(shooterSubsystem.getSpeed()) >= ShooterConstants.SHOOT_1_SPEED;
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterSubsystem.stopShoot();
+
     }
 }

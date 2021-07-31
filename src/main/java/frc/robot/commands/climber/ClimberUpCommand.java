@@ -1,14 +1,14 @@
-package frc.robot.commands.climbing;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
 
 
-public class ClimberDownCommand extends CommandBase {
+public class ClimberUpCommand extends CommandBase {
 
     private final ClimberSubsystem climberSubsystem;
 
-    public ClimberDownCommand(ClimberSubsystem climberSubsystem) {
+    public ClimberUpCommand(ClimberSubsystem climberSubsystem) {
         this.climberSubsystem = climberSubsystem;
         addRequirements(climberSubsystem);
     }
@@ -20,14 +20,14 @@ public class ClimberDownCommand extends CommandBase {
 
     @Override
     public void execute() {
-        climberSubsystem.climbDown();
+        climberSubsystem.climbUp();
     }
 
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
+        // return climberSubsystem.getTopLimitSwitch();
         return false;
-        // return climberSubsystem.getBottomLimitSwitch();
     }
 
     @Override

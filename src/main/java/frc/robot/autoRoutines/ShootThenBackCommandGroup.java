@@ -4,7 +4,7 @@ package frc.robot.autoRoutines;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drivetrain.DriveForDistanceCommand;
 import frc.robot.commands.intake.RetractIntakeCommand;
-import frc.robot.commands.shooting.StopSpinCommand;
+import frc.robot.commands.shooter.StopSpinCommand;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Limelight;
 
