@@ -15,14 +15,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private TalonSRX shooterLeftTalon;
     private TalonSRX shooterRightTalon;
-//    public Servo hoodServo1;
-//    public Servo hoodServo2;
+    public TalonSRX hoodTalon;
     private double distance;
     public enum ShooterStatus{
         FORWARD, BACKWARDS, OFF
     }
     public static ShooterStatus shooterStatus;
-    
+
     public ShooterSubsystem() {
         shooterLeftTalon = new TalonSRX(ShooterConstants.SHOOTER_LEFT_TALON);
         shooterRightTalon = new TalonSRX(ShooterConstants.SHOOTER_RIGHT_TALON);
