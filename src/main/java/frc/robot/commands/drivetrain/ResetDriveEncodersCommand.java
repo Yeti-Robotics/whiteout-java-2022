@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 
-public class ResetEncodersCommand extends CommandBase {
+public class ResetDriveEncodersCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrainSubsystem;
 
-    public ResetEncodersCommand(DrivetrainSubsystem drivetrainSubsystem) {
+    public ResetDriveEncodersCommand(DrivetrainSubsystem drivetrainSubsystem) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         addRequirements(drivetrainSubsystem);
     }

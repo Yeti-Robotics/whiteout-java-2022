@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
 
 
-public class ClimbUpCommand extends CommandBase {
+public class ClimberDownCommand extends CommandBase {
 
     private final ClimberSubsystem climberSubsystem;
 
-    public ClimbUpCommand(ClimberSubsystem climberSubsystem) {
+    public ClimberDownCommand(ClimberSubsystem climberSubsystem) {
         this.climberSubsystem = climberSubsystem;
         addRequirements(climberSubsystem);
     }
@@ -20,14 +20,14 @@ public class ClimbUpCommand extends CommandBase {
 
     @Override
     public void execute() {
-        climberSubsystem.climbUp();
+        climberSubsystem.climbDown();
     }
 
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        // return climberSubsystem.getTopLimitSwitch();
         return false;
+        // return climberSubsystem.getBottomLimitSwitch();
     }
 
     @Override
