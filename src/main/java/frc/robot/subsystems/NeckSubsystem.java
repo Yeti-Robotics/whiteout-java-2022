@@ -11,14 +11,12 @@ import frc.robot.Constants.NeckConstants;
 public class NeckSubsystem extends SubsystemBase {
     private VictorSPX neckBeltVictor;
     private VictorSPX neckRollerVictor;
-    private DigitalInput lowerBeamBreak;
-    private DigitalInput upperBeamBreak;
+    private DigitalInput neckBeamBreak;
 
     public NeckSubsystem() {
       neckBeltVictor = new VictorSPX(NeckConstants.NECK_BELT_VICTOR);
       neckRollerVictor = new VictorSPX(NeckConstants.NECK_ROLLER_VICTOR);
-      lowerBeamBreak = new DigitalInput(NeckConstants.LOWER_BEAM_BREAK);
-      upperBeamBreak = new DigitalInput(NeckConstants.UPPER_BEAM_BREAK);
+      neckBeamBreak = new DigitalInput(NeckConstants.NECK_BEAM_BREAK);
     }
 
     public void moveUp(){
@@ -38,11 +36,7 @@ public class NeckSubsystem extends SubsystemBase {
 
 
     public boolean getLowerBeamBreak() {
-        return lowerBeamBreak.get();
-    }
-
-    public boolean getUpperBeamBreak() {
-        return upperBeamBreak.get();
+        return neckBeamBreak.get();
     }
 
 }

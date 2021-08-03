@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.NeckSubsystem;
 
 // this command appears to be fairly redundant with MoveDownNeckCommand
-public class TowerClearCommand extends CommandBase {
+public class NeckClearCommand extends CommandBase {
   private NeckSubsystem neckSubsystem;
 
-  public TowerClearCommand(NeckSubsystem neckSubsystem) {
+  public NeckClearCommand(NeckSubsystem neckSubsystem) {
     this.neckSubsystem = neckSubsystem;
     addRequirements(neckSubsystem);
   }

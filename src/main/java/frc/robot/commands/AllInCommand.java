@@ -29,7 +29,13 @@ public class AllInCommand extends CommandBase {
   }
 
   @Override
-  public void execute() {}
+  public void execute(){
+    if(!this.neckSubsystem.getLowerBeamBreak()){
+      this.neckSubsystem.stopNeck();
+    } else {
+      this.neckSubsystem.moveUp();
+    }
+  }
 
   @Override
   public void end(boolean interrupted){

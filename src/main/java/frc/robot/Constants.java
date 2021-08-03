@@ -29,7 +29,7 @@ public final class Constants {
         public static final int RIGHT_FALCON_2 = 1;
 
         //shifter solenoid ports
-        public static final int[] SHIFTER_SOLENOID = {0,1};
+        public static final int[] SHIFTER_SOLENOID = {0,2};
 
         //pid drive constants
         public static final double kTurnP = 1;
@@ -51,7 +51,7 @@ public final class Constants {
         public static final int INTAKE_VICTOR = 5;
 
         //intake piston solenoid ports
-        public static final int[] INTAKE_PISTONS_SOLENOID = {2, 3};
+        public static final int[] INTAKE_PISTONS_SOLENOID = {1, 3};
 
         //intake motor speed
         public static final double ROLL_IN_SPEED = 1.0;
@@ -73,8 +73,7 @@ public final class Constants {
         public static final int NECK_ROLLER_VICTOR = 11;
 
         //beam break sensor dio ports
-        public static final int UPPER_BEAM_BREAK = 0;
-        public static final int LOWER_BEAM_BREAK = 2;
+        public static final int NECK_BEAM_BREAK = 2;
 
         //neck motor speed
         public static final double NECK_UP_SPEED = 0.75;
@@ -103,6 +102,13 @@ public final class Constants {
     public static final class HoodConstants{
         //hood motor port
         public static final int HOOD_SPARK = 7;
+
+        //hood beam break dio
+        public static final int HOOD_BEAM_BREAK = 0;
+
+        //hood angle toggle
+        public static final double BUMP_FIRE_ANGLE = 4.0;
+        public static final double OTHER_FIRING_ANGLE = 23.0;
 
         //hood calc constants
         public static final double COUNTS_PER_REVOLUTION = 42.0;

@@ -48,10 +48,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
-    // System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
+    System.out.println("hood angle: " + robotContainer.hoodSubsystem.hoodAngleFromEncoder(robotContainer.hoodSubsystem.getEncoder()));
     // System.out.println("limelight gettx: " + Limelight.getTx());
-
-    System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
+    System.out.println("lower beam break: " + robotContainer.neckSubsystem.getLowerBeamBreak());
+    // System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
     CommandScheduler.getInstance().run();
   }
 
@@ -66,9 +66,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    // if (robotContainer.hoodSubsystem.getBeamBreak()) {
-    //   robotContainer.hoodSubsystem.resetEncoder();
-    // }
+    if (!robotContainer.hoodSubsystem.getBeamBreak()) {
+      robotContainer.hoodSubsystem.resetEncoder();
+      System.out.println("Hood beam break:" + robotContainer.hoodSubsystem.getBeamBreak());
+    }
   }
 
   /**

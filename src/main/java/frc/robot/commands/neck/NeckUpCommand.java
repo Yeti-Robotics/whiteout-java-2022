@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.NeckSubsystem;
 
 
-public class MoveDownNeckCommand extends CommandBase {
+public class NeckUpCommand extends CommandBase {
     private final NeckSubsystem neckSubsystem;
-    public MoveDownNeckCommand(NeckSubsystem neckSubsystem) {
+    public NeckUpCommand(NeckSubsystem neckSubsystem) {
         this.neckSubsystem = neckSubsystem;
         addRequirements(neckSubsystem);
     }
@@ -18,7 +18,7 @@ public class MoveDownNeckCommand extends CommandBase {
 
     @Override
     public void execute() {
-        neckSubsystem.moveDown();
+        neckSubsystem.moveUp();
     }
 
     @Override

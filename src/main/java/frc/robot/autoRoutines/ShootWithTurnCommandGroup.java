@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drivetrain.TurnNoPIDCommand;
 import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
-import frc.robot.commands.neck.MoveUpNeckCommand;
+import frc.robot.commands.neck.NeckUpCommand;
 import frc.robot.commands.shooter.StartSpinCommand;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -26,7 +26,7 @@ public class ShootWithTurnCommandGroup extends SequentialCommandGroup {
 //                      new SetHoodAngleCommand(shooterSubsystem),
                         new ParallelCommandGroup(
                                 new HopperInCommand(hopperSubsystem),
-                                new MoveUpNeckCommand(neckSubsystem),
+                                new NeckUpCommand(neckSubsystem),
                                 new IntakeInCommand(intakeSubsystem)
                         )
         );

@@ -14,11 +14,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AllInCommand;
 import frc.robot.commands.AllOutCommand;
+import frc.robot.commands.climber.ClimberDownCommand;
+import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drivetrain.TurnToTargetPIDCommand;
 import frc.robot.commands.groups.AimToShootCommandGroup;
 import frc.robot.commands.hood.MoveHoodCommand;
+import frc.robot.commands.hood.ResetHoodEncoderCommand;
+import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakeCommand;
-import frc.robot.commands.neck.TowerClearCommand;
+import frc.robot.commands.neck.NeckClearCommand;
+import frc.robot.commands.neck.NeckUpCommand;
 import frc.robot.commands.shifting.ToggleShiftingCommand;
 import frc.robot.commands.shooter.ShootingPIDCommand;
 import frc.robot.commands.shooter.ToggleShooterCommand;
@@ -93,22 +98,35 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    setJoystickButtonWhileHeld(driverStationJoy, 1, new ShootingPIDCommand(shooterSubsystem));
+    //joystick buttons
+    setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftingCommand(shiftingGearsSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 12, new ToggleIntakeCommand(intakeSubsystem));
+  
+
+    // bottom row
+    setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleShooterCommand(shooterSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 3, new NeckClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
+    setJoystickButtonWhileHeld(driverStationJoy, 4, new NeckUpCommand(neckSubsystem));
+    
+    //clear scheduler command for kill switch
+    
+    
+    // top row
+    setJoystickButtonWhileHeld(driverStationJoy, 5, new ClimberDownCommand(climberSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 7, new IntakeInCommand(intakeSubsystem));
+    
+
+    // setJoystickButtonWhileHeld(driverStationJoy, 1, new ShootingPIDCommand(shooterSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoy, 1, new TurnToTargetPIDCommand(drivetrainSubsystem));
-    //setJoystickButtonWhenPressed(driverStationJoy, 1, new ResetHoodEncoderCommand(hoodSubsystem)); // Allison wanted this made, we're not sure why
     // setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleIntakeCommand(intakeSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 2, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
-    // setJoystickButtonWhileHeld(driverStationJoy, 3, new MoveHoodCommand(hoodSubsystem, -0.1)); // hood out
-    setJoystickButtonWhenPressed(driverStationJoy, 4, new AimToShootCommandGroup(drivetrainSubsystem, hoodSubsystem)); // AimToShoot not written yet
-    // setJoystickButtonWhenPressed(driverStationJoy, 5, new ClimbDownCommand(climberSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 7, new TowerClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
-    // setJoystickButtonWhileHeld(driverStationJoy, 8, new MoveHoodCommand(hoodSubsystem, 0.1)); // hood in
-    setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleShooterCommand(shooterSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoy, 10, new ClimbUpCommand(climberSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftingCommand(shiftingGearsSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoy, 12, new RunCommand(() -> hoodSubsystem.resetEncoder(), hoodSubsystem));
+    // setJoystickButtonWhileHeld(driverStationJoy, 4, new MoveHoodCommand(hoodSubsystem, -0.1)); // hood out
+    // setJoystickButtonWhenPressed(driverStationJoy, 4, new AimToShootCommandGroup(drivetrainSubsystem, hoodSubsystem)); // AimToShoot not written yet
+    // setJoystickButtonWhileHeld(driverStationJoy, 9, new MoveHoodCommand(hoodSubsystem, 0.1)); // hood in
+    setJoystickButtonWhileHeld(driverStationJoy, 10, new ClimberUpCommand(climberSubsystem));
+   
   }
 
   public double getServoThrottle() {

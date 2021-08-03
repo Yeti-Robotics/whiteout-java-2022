@@ -50,7 +50,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shootFlywheel(double speed){
-        shooterLeftTalon.set(ControlMode.PercentOutput, speed);
         shooterRightTalon.set(ControlMode.PercentOutput, speed);
         shooterStatus = ShooterStatus.FORWARD;
     }
