@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.HoodSubsystem.HoodStatus;
 import frc.robot.utils.Limelight;
 
 /**
@@ -50,7 +51,7 @@ public class Robot extends TimedRobot {
     // System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
     System.out.println("hood angle: " + robotContainer.hoodSubsystem.hoodAngleFromEncoder(robotContainer.hoodSubsystem.getEncoder()));
     // System.out.println("limelight gettx: " + Limelight.getTx());
-    System.out.println("lower beam break: " + robotContainer.neckSubsystem.getLowerBeamBreak());
+    // System.out.println("lower beam break: " + robotContainer.neckSubsystem.getLowerBeamBreak());
     // System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
     CommandScheduler.getInstance().run();
   }
@@ -66,10 +67,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    if (!robotContainer.hoodSubsystem.getBeamBreak()) {
+    // if (!robotContainer.hoodSubsystem.getBeamBreak()) {
       robotContainer.hoodSubsystem.resetEncoder();
-      System.out.println("Hood beam break:" + robotContainer.hoodSubsystem.getBeamBreak());
-    }
+      robotContainer.hoodSubsystem.hoodStatus = HoodStatus.LOWER_LIMIT;
+      // System.out.println("Hood beam break:" + robotContainer.hoodSubsystem.getBeamBreak());
+    // }
   }
 
   /**

@@ -6,10 +6,10 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 
-public class StopRollCommand extends CommandBase {
+public class StopIntakeCommand extends CommandBase {
     private final IntakeSubsystem intakeSubsystem;
 
-    public StopRollCommand(IntakeSubsystem intakeSubsystem) {
+    public StopIntakeCommand(IntakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         addRequirements(intakeSubsystem);
     }

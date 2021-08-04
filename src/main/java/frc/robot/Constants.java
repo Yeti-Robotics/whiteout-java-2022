@@ -86,7 +86,7 @@ public final class Constants {
         public static final int SHOOTER_RIGHT_TALON = 10; //right
 
         //shooter motor speeds    
-        public static final double SHOOT_1_SPEED = .75;
+        public static final double SHOOT_1_SPEED = .9;
         public static final double SHOOT_2_SPEED = .9;
         public static final double REVERSE_SHOOT_1_SPEED = -0.5;
         public static final double REVERSE_SHOOT_2_SPEED = -0.5;
@@ -108,14 +108,14 @@ public final class Constants {
 
         //hood angle toggle
         public static final double BUMP_FIRE_ANGLE = 4.0;
-        public static final double OTHER_FIRING_ANGLE = 23.0;
+        public static final double INIT_FIRING_ANGLE = 45.0; //from front ideally, works from behind as well
 
         //hood calc constants
         public static final double COUNTS_PER_REVOLUTION = 42.0;
         public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
         public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
         public static final double HOOD_ANGLE_TOLERANCE = .25;
-        public static final double MAX_HOOD_ANGLE = 30.0;
+        public static final double MAX_HOOD_ANGLE = 45.0;
     }
 
     public static final class ClimberConstants{
@@ -124,7 +124,7 @@ public final class Constants {
         public static final int CLIMBER_RIGHT_TALON = 2; //right
 
         //climber motor speed
-        public static final double CLIMBER_SPEED = 0.9;
+        public static final double CLIMBER_SPEED = 0.5;
 
         //climber current limiting constants
         public static final int CLIMBER_CONT_CURRENT_LIMIT = 15;
