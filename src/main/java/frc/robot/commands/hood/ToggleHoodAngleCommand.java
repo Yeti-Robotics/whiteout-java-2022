@@ -23,18 +23,23 @@ public class ToggleHoodAngleCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("initializing");
     if (hoodSubsystem.hoodStatus == HoodStatus.LOWER_LIMIT) {
       encoderGoal = hoodSubsystem.hoodEncoderFromAngle(HoodConstants.BUMP_FIRE_ANGLE);
       hoodSubsystem.hoodStatus = HoodStatus.BUMP_FIRE;
+      System.out.println("setting to bump fire");
     } else if (hoodSubsystem.hoodStatus == HoodStatus.BUMP_FIRE){
       encoderGoal = hoodSubsystem.hoodEncoderFromAngle(HoodConstants.INIT_FIRING_ANGLE);
       hoodSubsystem.hoodStatus = HoodStatus.INIT_LINE;
+      System.out.println("setting to init line");
     } else if (hoodSubsystem.hoodStatus == HoodStatus.INIT_LINE) {
       encoderGoal = hoodSubsystem.hoodEncoderFromAngle(HoodConstants.BUMP_FIRE_ANGLE);
       hoodSubsystem.hoodStatus = HoodStatus.BUMP_FIRE;
+      System.out.println("setting to bump fire");
     } else {
       encoderGoal = hoodSubsystem.hoodEncoderFromAngle(0);
       hoodSubsystem.hoodStatus = HoodStatus.LOWER_LIMIT;
+      System.out.println("setting to lower limit");
     }
     if (encoderGoal < hoodSubsystem.getEncoder()){
         power = -power;
@@ -52,6 +57,7 @@ public class ToggleHoodAngleCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     hoodSubsystem.stopHood();
+    System.out.println("its ended teehee");
   }
 
   // Returns true when the command should end.

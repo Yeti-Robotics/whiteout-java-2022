@@ -107,14 +107,17 @@ public final class Constants {
         public static final int HOOD_BEAM_BREAK = 0;
 
         //hood angle toggle
-        public static final double BUMP_FIRE_ANGLE = 4.0;
-        public static final double INIT_FIRING_ANGLE = 45.0; //from front ideally, works from behind as well
+        public static final double BUMP_FIRE_ANGLE = 0.0;
+        public static final double INIT_FIRING_ANGLE = 40.0; //from front ideally, works from behind as well
+
+        //hood speed
+        public static final double HOOD_SPEED = 0.1;
 
         //hood calc constants
         public static final double COUNTS_PER_REVOLUTION = 42.0;
         public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
         public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
-        public static final double HOOD_ANGLE_TOLERANCE = .25;
+        public static final double HOOD_ANGLE_TOLERANCE = 0.2;
         public static final double MAX_HOOD_ANGLE = 45.0;
     }
 

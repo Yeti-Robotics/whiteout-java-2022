@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class ToggleIntakeCommand extends CommandBase {
-    private final IntakeSubsystem intakeSubsystem;
+    private IntakeSubsystem intakeSubsystem;
 
     public ToggleIntakeCommand(IntakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
@@ -18,7 +18,7 @@ public class ToggleIntakeCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (IntakeSubsystem.getIntakePosition() == IntakeSubsystem.IntakeStatus.UP) {
+        if(intakeSubsystem.getIntakePosition() == intakeSubsystem.getIntakeStatusUp()) {
             intakeSubsystem.extend();
         } else {
             intakeSubsystem.retract();

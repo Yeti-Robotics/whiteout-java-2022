@@ -16,17 +16,17 @@ public class StartSpinCommand extends CommandBase {
 
     @Override
     public void initialize() {
-
+        // shooterSubsystem.shoot();
+        shooterSubsystem.shootFlywheel(ShooterConstants.SHOOT_1_SPEED);
     }
 
     @Override
     public void execute() {
-        shooterSubsystem.shoot();
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(shooterSubsystem.getSpeed()) >= ShooterConstants.SHOOT_1_SPEED;
+        return true;
     }
 
     @Override

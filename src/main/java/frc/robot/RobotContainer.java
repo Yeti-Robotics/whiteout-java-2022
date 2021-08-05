@@ -11,15 +11,20 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.autoRoutines.DriveForwardThenBumpFireCommandGroup;
+import frc.robot.autoRoutines.FireThreeThenForwardCommandGroup;
 import frc.robot.commands.AllInCommand;
 import frc.robot.commands.AllOutCommand;
 import frc.robot.commands.climber.ClimberDownCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drivetrain.TurnToTargetPIDCommand;
 import frc.robot.commands.groups.AimToShootCommandGroup;
 import frc.robot.commands.hood.MoveHoodCommand;
 import frc.robot.commands.hood.ResetHoodEncoderCommand;
+import frc.robot.commands.hood.SetHoodAngle;
 import frc.robot.commands.hood.ToggleHoodAngleCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakeCommand;
@@ -106,8 +111,12 @@ public class RobotContainer {
     // bottom row
     setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleShooterCommand(shooterSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 3, new NeckClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
-    setJoystickButtonWhileHeld(driverStationJoy, 4, new NeckUpCommand(neckSubsystem));
+    // setJoystickButtonWhileHeld(driverStationJoy, 3, new NeckClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
+    setJoystickButtonWhenPressed(driverStationJoy, 3, new SetHoodAngle(hoodSubsystem, HoodConstants.BUMP_FIRE_ANGLE, HoodConstants.HOOD_SPEED));
+    
+    setJoystickButtonWhileHeld(driverStationJoy, 4, new NeckClearCommand(neckSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoy, 4, new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoy, 4, new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 5, new ClimberDownCommand(climberSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoy, 5, new ToggleHoodAngleCommand(hoodSubsystem, 0.05));
     //clear scheduler command for kill switch on button 5
@@ -115,7 +124,8 @@ public class RobotContainer {
     // top row
     setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 7, new IntakeInCommand(intakeSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoy, 8, new TurnToTargetPIDCommand(drivetrainSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 8, new SetHoodAngle(hoodSubsystem, HoodConstants.INIT_FIRING_ANGLE, HoodConstants.HOOD_SPEED));
+    // setJoystickButtonWhenPressed(driverStationJoy, 8, new TurnToTargetPIDCommand(drivetrainSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 9, new ToggleHoodAngleCommand(hoodSubsystem, 0.15)); //out
     // setJoystickButtonWhileHeld(driverStationJoy, 10, new MoveHoodCommand(hoodSubsystem, -0.1)); //in
     setJoystickButtonWhileHeld(driverStationJoy, 10, new ClimberUpCommand(climberSubsystem));
@@ -160,5 +170,9 @@ public class RobotContainer {
 
   private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whileHeld(command);
+  }
+
+  public Command getAutonomousCommand(){
+    return new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem);
   }
 }

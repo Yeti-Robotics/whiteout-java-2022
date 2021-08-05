@@ -33,12 +33,12 @@ public class HoodSubsystem extends SubsystemBase {
     hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
     hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0));
     
-    if(beamBreak.get()) hoodStatus = HoodStatus.LOWER_LIMIT;
   }
 
   @Override
 
   public void periodic() {
+    if(beamBreak.get()) hoodStatus = HoodStatus.LOWER_LIMIT;
   }
 
   public void moveHood(double power) {

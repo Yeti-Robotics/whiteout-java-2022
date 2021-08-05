@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -24,7 +23,9 @@ public class AllInCommand extends CommandBase {
 
   @Override
   public void initialize(){
-    this.intakeSubsystem.rollIn();
+    if(intakeSubsystem.getIntakePosition() != intakeSubsystem.getIntakeStatusDown()){ // logic should be inverse but it works so whatever
+      this.intakeSubsystem.rollIn();
+    }
     this.hopperSubsystem.funnelIn();
     this.neckSubsystem.moveUp();
   }
@@ -34,8 +35,8 @@ public class AllInCommand extends CommandBase {
     // if(!this.neckSubsystem.getLowerBeamBreak()){
       // this.neckSubsystem.stopNeck();
     // } else {
-      this.neckSubsystem.moveUp();
-        // }
+      // this.neckSubsystem.moveUp();
+    // }
   }
 
   @Override

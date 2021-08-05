@@ -8,10 +8,10 @@ import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-    public enum IntakeStatus{
+    public enum IntakeStatus {
         DOWN, UP
     }
-    public static IntakeStatus intakeStatus;
+    public IntakeStatus intakeStatus;
 
     private VictorSPX intakeVictor;
     private DoubleSolenoid pistons;
@@ -20,6 +20,8 @@ public class IntakeSubsystem extends SubsystemBase {
         pistons = new DoubleSolenoid(IntakeConstants.INTAKE_PISTONS_SOLENOID[0], IntakeConstants.INTAKE_PISTONS_SOLENOID[1]);
         intakeVictor = new VictorSPX(IntakeConstants.INTAKE_VICTOR);
         intakeVictor.setInverted(true);
+
+        intakeStatus = IntakeStatus.UP;
     }
 
     public void extend(){
@@ -44,9 +46,16 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeVictor.set(ControlMode.PercentOutput, 0);
     }
 
-    public static IntakeStatus getIntakePosition(){
+    public IntakeStatus getIntakePosition(){
         return intakeStatus;
     }
 
+    public IntakeStatus getIntakeStatusDown(){
+        return IntakeStatus.DOWN;
+    }
+
+    public IntakeStatus getIntakeStatusUp(){
+        return IntakeStatus.UP;
+    }
 }
 

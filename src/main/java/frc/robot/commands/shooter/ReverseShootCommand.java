@@ -1,6 +1,7 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
@@ -19,7 +20,7 @@ public class ReverseShootCommand extends CommandBase {
 
     @Override
     public void execute() {
-        shooterSubsystem.reverseShoot();
+        shooterSubsystem.reverseShoot(ShooterConstants.REVERSE_SHOOT_1_SPEED);
     }
 
     @Override

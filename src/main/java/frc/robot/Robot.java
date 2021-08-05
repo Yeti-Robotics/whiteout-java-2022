@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     // System.out.println("limelight gettx: " + Limelight.getTx());
     // System.out.println("lower beam break: " + robotContainer.neckSubsystem.getLowerBeamBreak());
     // System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
+    System.out.println("flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM());
     CommandScheduler.getInstance().run();
   }
 
@@ -67,11 +68,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    // if (!robotContainer.hoodSubsystem.getBeamBreak()) {
+    if (robotContainer.hoodSubsystem.getBeamBreak()) {
       robotContainer.hoodSubsystem.resetEncoder();
       robotContainer.hoodSubsystem.hoodStatus = HoodStatus.LOWER_LIMIT;
       // System.out.println("Hood beam break:" + robotContainer.hoodSubsystem.getBeamBreak());
-    // }
+    }
   }
 
   /**
@@ -79,6 +80,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
