@@ -31,14 +31,13 @@ public class HoodSubsystem extends SubsystemBase {
     beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
     hoodSpark.setInverted(false);
     hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
-    hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0));
-    
+    hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0.0));
   }
 
   @Override
 
   public void periodic() {
-    if(beamBreak.get()) hoodStatus = HoodStatus.LOWER_LIMIT;
+    // if(beamBreak.get()) hoodStatus = HoodStatus.LOWER_LIMIT;
   }
 
   public void moveHood(double power) {

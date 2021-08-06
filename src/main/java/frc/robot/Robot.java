@@ -9,8 +9,13 @@ package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.autoRoutines.DriveForwardThenBumpFireCommandGroup;
+import frc.robot.autoRoutines.FireThreeThenForwardCommandGroup;
 import frc.robot.subsystems.HoodSubsystem.HoodStatus;
 import frc.robot.utils.Limelight;
 
@@ -27,7 +32,11 @@ public class Robot extends TimedRobot {
 
   public static NetworkTable networkTable;
   public static NetworkTable rootNetworkTable;
+  public static SendableChooser autoChooser;
 
+	public static enum AutoModes {
+		FIRE_FORWARD, FORWARD_FIRE
+	};
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -35,6 +44,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
+
+    autoChooser = new SendableChooser();
+    autoChooser.setDefaultOption("default is fire then move forward", AutoModes.FIRE_FORWARD);
+    autoChooser.addOption("forward then bump fire", AutoModes.FORWARD_FIRE);
+		autoChooser.addOption("fire then forward", AutoModes.FIRE_FORWARD);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putNumber("Hood Angle (degrees): ", robotContainer.hoodSubsystem.hoodAngleFromEncoder(robotContainer.hoodSubsystem.getEncoder()));
+    SmartDashboard.putNumber("Flywheel RPM: ", robotContainer.shooterSubsystem.getFlywheelRPM());
   }
 
   /**
@@ -49,11 +66,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
-    System.out.println("hood angle: " + robotContainer.hoodSubsystem.hoodAngleFromEncoder(robotContainer.hoodSubsystem.getEncoder()));
+    // System.out.println("hood angle: " + robotContainer.hoodSubsystem.hoodAngleFromEncoder(robotContainer.hoodSubsystem.getEncoder()));
     // System.out.println("limelight gettx: " + Limelight.getTx());
     // System.out.println("lower beam break: " + robotContainer.neckSubsystem.getLowerBeamBreak());
     // System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
-    System.out.println("flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM());
+    // System.out.println("flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM());
+    System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
     CommandScheduler.getInstance().run();
   }
 
@@ -63,6 +81,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    
     
   }
 
@@ -92,6 +111,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
 
   }
 

@@ -107,7 +107,7 @@ public final class Constants {
         public static final int HOOD_BEAM_BREAK = 0;
 
         //hood angle toggle
-        public static final double BUMP_FIRE_ANGLE = 0.0;
+        public static final double BUMP_FIRE_ANGLE = 1.0;
         public static final double INIT_FIRING_ANGLE = 40.0; //from front ideally, works from behind as well
 
         //hood speed

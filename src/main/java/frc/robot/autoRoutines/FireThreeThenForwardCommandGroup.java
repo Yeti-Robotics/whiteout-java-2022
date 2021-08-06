@@ -30,7 +30,6 @@ public class FireThreeThenForwardCommandGroup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveForDistanceCommand(drivetrainSubsystem, 10.0, drivePower, drivePower), 
       new SetHoodAngle(hoodSubsystem, HoodConstants.INIT_FIRING_ANGLE, HoodConstants.HOOD_SPEED),
       new WaitCommand(0.5), 
       new StartSpinCommand(shooterSubsystem),
@@ -40,7 +39,8 @@ public class FireThreeThenForwardCommandGroup extends SequentialCommandGroup {
       new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem).withTimeout(0.25),
       new WaitCommand(1.0), 
       new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem).withTimeout(0.5), 
-      new StopSpinCommand(shooterSubsystem)
+      new StopSpinCommand(shooterSubsystem),
+      new DriveForDistanceCommand(drivetrainSubsystem, 10.0, drivePower, drivePower)
     );
   }
 }

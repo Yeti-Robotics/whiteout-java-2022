@@ -35,6 +35,8 @@ public class SetHoodAngle extends CommandBase {
   @Override
   public void execute() {
     hoodSubsystem.moveHood(power);
+    // System.out.println("angle" + hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder()) + hoodSubsystem.hoodStatus);
+
   }
 
   // Called once the command ends or is interrupted.

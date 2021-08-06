@@ -111,10 +111,9 @@ public class RobotContainer {
     // bottom row
     setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleShooterCommand(shooterSubsystem));
-    // setJoystickButtonWhileHeld(driverStationJoy, 3, new NeckClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
-    setJoystickButtonWhenPressed(driverStationJoy, 3, new SetHoodAngle(hoodSubsystem, HoodConstants.BUMP_FIRE_ANGLE, HoodConstants.HOOD_SPEED));
-    
-    setJoystickButtonWhileHeld(driverStationJoy, 4, new NeckClearCommand(neckSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 3, new NeckClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
+    // setJoystickButtonWhenPressed(driverStationJoy, 4, new SetHoodAngle(hoodSubsystem, HoodConstants.BUMP_FIRE_ANGLE, HoodConstants.HOOD_SPEED));
+    setJoystickButtonWhileHeld(driverStationJoy, 4, new MoveHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED));
     // setJoystickButtonWhenPressed(driverStationJoy, 4, new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoy, 4, new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 5, new ClimberDownCommand(climberSubsystem));
@@ -124,9 +123,10 @@ public class RobotContainer {
     // top row
     setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 7, new IntakeInCommand(intakeSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoy, 8, new SetHoodAngle(hoodSubsystem, HoodConstants.INIT_FIRING_ANGLE, HoodConstants.HOOD_SPEED));
-    // setJoystickButtonWhenPressed(driverStationJoy, 8, new TurnToTargetPIDCommand(drivetrainSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoy, 9, new ToggleHoodAngleCommand(hoodSubsystem, 0.15)); //out
+    setJoystickButtonWhenPressed(driverStationJoy, 8, new TurnToTargetPIDCommand(drivetrainSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleHoodAngleCommand(hoodSubsystem, 0.15)); //out
+    // setJoystickButtonWhenPressed(driverStationJoy, 9, new SetHoodAngle(hoodSubsystem, HoodConstants.INIT_FIRING_ANGLE, HoodConstants.HOOD_SPEED));
+    setJoystickButtonWhileHeld(driverStationJoy, 9, new MoveHoodCommand(hoodSubsystem, HoodConstants.HOOD_SPEED));
     // setJoystickButtonWhileHeld(driverStationJoy, 10, new MoveHoodCommand(hoodSubsystem, -0.1)); //in
     setJoystickButtonWhileHeld(driverStationJoy, 10, new ClimberUpCommand(climberSubsystem));
   }
@@ -173,6 +173,16 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand(){
-    return new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem);
+
+    switch ((Robot.AutoModes) Robot.autoChooser.getSelected()) {
+			case FIRE_FORWARD:
+				return new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem);
+			case FORWARD_FIRE:
+        return new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, hoodSubsystem);
+			default:
+        return new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, hoodSubsystem);
+		}
+    // return new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem);
+    // return new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem);
   }
 }
