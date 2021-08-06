@@ -1,17 +1,15 @@
-package frc.robot.commands.shooting;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
-public class TestHoodMotorCommand extends CommandBase {
+public class StopSpinCommand extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    public double speed;
 
-    public TestHoodMotorCommand(ShooterSubsystem shooterSubsystem, double speed) {
+    public StopSpinCommand(ShooterSubsystem shooterSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
         addRequirements(shooterSubsystem);
-        this.speed = speed;
     }
 
     @Override
@@ -21,18 +19,17 @@ public class TestHoodMotorCommand extends CommandBase {
 
     @Override
     public void execute() {
-        shooterSubsystem.moveHood(speed);
+        shooterSubsystem.stopShoot();
     }
 
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return false;
+        return true;
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterSubsystem.stopHood();
 
     }
 }

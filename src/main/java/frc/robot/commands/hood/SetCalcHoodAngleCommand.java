@@ -14,6 +14,7 @@ public class SetCalcHoodAngleCommand extends CommandBase {
     private double encoderGoal;
     private double power;
     
+    // Sets the hood to the angle calculated the Limelight 
     public SetCalcHoodAngleCommand(HoodSubsystem hoodSubsystem, double power) {
         this.hoodSubsystem = hoodSubsystem;
         this.power = Math.abs(power);

@@ -9,9 +9,15 @@ package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.autoRoutines.TurnThenForwardThenShootCommandGroup;
+import frc.robot.autoRoutines.DriveForwardThenBumpFireCommandGroup;
+import frc.robot.autoRoutines.FireThreeThenForwardCommandGroup;
+import frc.robot.subsystems.HoodSubsystem.HoodStatus;
+import frc.robot.utils.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -26,13 +32,26 @@ public class Robot extends TimedRobot {
 
   public static NetworkTable networkTable;
   public static NetworkTable rootNetworkTable;
+  public static SendableChooser autoChooser;
 
+	public static enum AutoModes {
+		FIRE_FORWARD, FORWARD_FIRE
+	};
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
+    robotContainer = new RobotContainer();
+
+    autoChooser = new SendableChooser();
+    autoChooser.setDefaultOption("default is fire then move forward", AutoModes.FIRE_FORWARD);
+    autoChooser.addOption("forward then bump fire", AutoModes.FORWARD_FIRE);
+		autoChooser.addOption("fire then forward", AutoModes.FIRE_FORWARD);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putNumber("Hood Angle (degrees): ", robotContainer.hoodSubsystem.hoodAngleFromEncoder(robotContainer.hoodSubsystem.getEncoder()));
+    SmartDashboard.putNumber("Flywheel RPM: ", robotContainer.shooterSubsystem.getFlywheelRPM());
   }
 
   /**
@@ -46,18 +65,33 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-}
+    // System.out.println("upper: " + robotContainer.neckSubsystem.getUpperBeamBreak());
+    // System.out.println("hood angle: " + robotContainer.hoodSubsystem.hoodAngleFromEncoder(robotContainer.hoodSubsystem.getEncoder()));
+    // System.out.println("limelight gettx: " + Limelight.getTx());
+    // System.out.println("lower beam break: " + robotContainer.neckSubsystem.getLowerBeamBreak());
+    // System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
+    // System.out.println("flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM());
+    System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
+    CommandScheduler.getInstance().run();
+  }
 
  
   /**
-   * This function is called once each time the robot enters Disabled mode.z
+   * This function is called once each time the robot enters Disabled mode. 
    */
   @Override
   public void disabledInit() {
+    
+    
   }
 
   @Override
   public void disabledPeriodic() {
+    if (robotContainer.hoodSubsystem.getBeamBreak()) {
+      robotContainer.hoodSubsystem.resetEncoder();
+      robotContainer.hoodSubsystem.hoodStatus = HoodStatus.LOWER_LIMIT;
+      // System.out.println("Hood beam break:" + robotContainer.hoodSubsystem.getBeamBreak());
+    }
   }
 
   /**
@@ -65,6 +99,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -75,7 +111,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
 
+  }
+
+  @Override
+  public void teleopInit() {
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
   }
 
   /**

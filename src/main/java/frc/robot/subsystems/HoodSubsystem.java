@@ -10,7 +10,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.HoodConstants;
 
 public class HoodSubsystem extends SubsystemBase {
@@ -18,17 +20,24 @@ public class HoodSubsystem extends SubsystemBase {
   private CANEncoder hoodEncoder;
   private CANDigitalInput beamBreak;
 
+  public static enum HoodStatus {
+    BUMP_FIRE, INIT_LINE, LOWER_LIMIT 
+  }
+  public static HoodStatus hoodStatus;
+
   public HoodSubsystem() {
     hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  
     hoodEncoder = hoodSpark.getEncoder();
-    hoodSpark.setInverted(true);
     beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
+    hoodSpark.setInverted(false);
     hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
-    hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0));
+    hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0.0));
   }
 
   @Override
+
   public void periodic() {
+    // if(beamBreak.get()) hoodStatus = HoodStatus.LOWER_LIMIT;
   }
 
   public void moveHood(double power) {
@@ -55,12 +64,13 @@ public class HoodSubsystem extends SubsystemBase {
     return hoodEncoder.getPosition();
   }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
+  //the beam break indicates whether the hood has reached its limit or not (outside of hard/soft limits)
   public boolean getBeamBreak(){
     return beamBreak.get();
   }
 
    public double calcHoodAngle(double distance) {
      //y = mx+b values based on hood testing
-     return ((.0867898* distance) + 12.4589);
+     return ((.0867898 * distance) + 12.4589);
    }
 }

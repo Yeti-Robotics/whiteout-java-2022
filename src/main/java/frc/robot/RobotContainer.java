@@ -9,29 +9,38 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.autoRoutines.ShootCommandGroup;
-import frc.robot.autoRoutines.ShootWithTurnCommandGroup;
-import frc.robot.commands.climbing.ClimbDownCommand;
-import frc.robot.commands.climbing.ClimbUpCommand;
-import frc.robot.commands.drivetrain.DriveForDistanceCommand;
-import frc.robot.commands.drivetrain.ResetEncodersCommand;
-import frc.robot.commands.drivetrain.StopDriveCommand;
-import frc.robot.commands.drivetrain.TurnNoPIDCommand;
-import frc.robot.commands.hopper.HopperOutCommand;
-import frc.robot.commands.hopper.StopFunnelCommand;
-import frc.robot.commands.intake.*;
-import frc.robot.commands.neck.MoveDownNeckCommand;
-import frc.robot.commands.neck.StopNeckCommand;
+import frc.robot.autoRoutines.DriveForwardThenBumpFireCommandGroup;
+import frc.robot.autoRoutines.FireThreeThenForwardCommandGroup;
+import frc.robot.commands.AllInCommand;
+import frc.robot.commands.AllOutCommand;
+import frc.robot.commands.climber.ClimberDownCommand;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.climber.ClimberUpCommand;
+import frc.robot.commands.drivetrain.TurnToTargetPIDCommand;
+import frc.robot.commands.groups.AimToShootCommandGroup;
+import frc.robot.commands.hood.MoveHoodCommand;
+import frc.robot.commands.hood.ResetHoodEncoderCommand;
+import frc.robot.commands.hood.SetHoodAngle;
+import frc.robot.commands.hood.ToggleHoodAngleCommand;
+import frc.robot.commands.intake.IntakeInCommand;
+import frc.robot.commands.intake.ToggleIntakeCommand;
+import frc.robot.commands.neck.NeckClearCommand;
+import frc.robot.commands.neck.NeckUpCommand;
 import frc.robot.commands.shifting.ToggleShiftingCommand;
-import frc.robot.commands.neck.MoveUpNeckCommand;
-import frc.robot.commands.hopper.HopperInCommand;
-import frc.robot.commands.shooting.*;
-import frc.robot.subsystems.*;
+import frc.robot.commands.shooter.ShootingPIDCommand;
+import frc.robot.commands.shooter.ToggleShooterCommand;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.HoodSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.NeckSubsystem;
+import frc.robot.subsystems.ShiftingGearsSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utils.Limelight;
 //import frc.robot.utils.DoubleButton;
 
@@ -55,6 +64,7 @@ public class RobotContainer {
   public NeckSubsystem neckSubsystem;
   public ShooterSubsystem shooterSubsystem;
   public HopperSubsystem hopperSubsystem;
+  public HoodSubsystem hoodSubsystem;
   public ClimberSubsystem climberSubsystem;
   public ShiftingGearsSubsystem shiftingGearsSubsystem;
   public Limelight limelight;
@@ -68,6 +78,7 @@ public class RobotContainer {
     neckSubsystem = new NeckSubsystem();
     shooterSubsystem = new ShooterSubsystem();
     hopperSubsystem = new HopperSubsystem();
+    hoodSubsystem = new HoodSubsystem();
     shiftingGearsSubsystem = new ShiftingGearsSubsystem();
     climberSubsystem = new ClimberSubsystem();
     limelight = new Limelight();
@@ -76,19 +87,48 @@ public class RobotContainer {
     //enable this to drive!!
     switch (drivetrainSubsystem.getDriveMode()) {
       case TANK:
-          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
-          break;
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+        break;
       case CHEEZY:
-          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
-          break;
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        break;
       case ARCADE:
-          drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        break;
+      default:
+        // tank 
+        drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+        break;
     }    
-  configureButtonBindings();
+    configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-    //TODO: Configure Button Bindings
+    //joystick buttons
+    setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftingCommand(shiftingGearsSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 12, new ToggleIntakeCommand(intakeSubsystem));
+  
+    // bottom row
+    setJoystickButtonWhileHeld(driverStationJoy, 1, new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleShooterCommand(shooterSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 3, new NeckClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
+    // setJoystickButtonWhenPressed(driverStationJoy, 4, new SetHoodAngle(hoodSubsystem, HoodConstants.BUMP_FIRE_ANGLE, HoodConstants.HOOD_SPEED));
+    setJoystickButtonWhileHeld(driverStationJoy, 4, new MoveHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED));
+    // setJoystickButtonWhenPressed(driverStationJoy, 4, new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoy, 4, new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 5, new ClimberDownCommand(climberSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoy, 5, new ToggleHoodAngleCommand(hoodSubsystem, 0.05));
+    //clear scheduler command for kill switch on button 5
+    
+    // top row
+    setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 7, new IntakeInCommand(intakeSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoy, 8, new TurnToTargetPIDCommand(drivetrainSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleHoodAngleCommand(hoodSubsystem, 0.15)); //out
+    // setJoystickButtonWhenPressed(driverStationJoy, 9, new SetHoodAngle(hoodSubsystem, HoodConstants.INIT_FIRING_ANGLE, HoodConstants.HOOD_SPEED));
+    setJoystickButtonWhileHeld(driverStationJoy, 9, new MoveHoodCommand(hoodSubsystem, HoodConstants.HOOD_SPEED));
+    // setJoystickButtonWhileHeld(driverStationJoy, 10, new MoveHoodCommand(hoodSubsystem, -0.1)); //in
+    setJoystickButtonWhileHeld(driverStationJoy, 10, new ClimberUpCommand(climberSubsystem));
   }
 
   public double getServoThrottle() {
@@ -96,11 +136,11 @@ public class RobotContainer {
   }
 
   public double getLeftY() {
-    if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1){
-      return driverStationJoy.getRawAxis(1);
-    }else{
-      return 0;
-    }
+    // if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1){
+      return -driverStationJoy.getRawAxis(0);
+    // } else {
+    //   return 0;
+    // }
   }
 
   public double getLeftX() {
@@ -109,15 +149,15 @@ public class RobotContainer {
 
   public double getRightY() {
 
-    if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1){
-      return driverStationJoy.getRawAxis(3);
-    }else{
-      return 0;
-    }
+    // if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1){
+      return -driverStationJoy.getRawAxis(2);
+    // } else {
+    //   return 0;
+    // }
   }
 
   public double getRightX() {
-    return driverStationJoy.getX();
+    return driverStationJoy.getRawAxis(3);
   }
 
   public double getLeftThrottle() {
@@ -130,5 +170,19 @@ public class RobotContainer {
 
   private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whileHeld(command);
+  }
+
+  public Command getAutonomousCommand(){
+
+    switch ((Robot.AutoModes) Robot.autoChooser.getSelected()) {
+			case FIRE_FORWARD:
+				return new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem);
+			case FORWARD_FIRE:
+        return new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, hoodSubsystem);
+			default:
+        return new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, hoodSubsystem);
+		}
+    // return new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem);
+    // return new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem);
   }
 }

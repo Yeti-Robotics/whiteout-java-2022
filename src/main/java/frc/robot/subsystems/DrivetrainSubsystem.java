@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-    private WPI_TalonFX leftFalcon1, leftFalcon2, rightFalcon1, rightFalcon2;  
+  private WPI_TalonFX leftFalcon1, leftFalcon2, rightFalcon1, rightFalcon2;  
   
   // The robot's drive
   public final DifferentialDrive m_drive;
@@ -44,7 +44,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightFalcon1.setNeutralMode(NeutralMode.Brake);
     resetEncoders();
   
-    driveMode = DriveMode.CHEEZY;
+    driveMode = DriveMode.TANK;
   }
 
   @Override

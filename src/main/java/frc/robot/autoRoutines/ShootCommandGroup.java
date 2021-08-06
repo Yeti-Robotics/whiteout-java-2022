@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
-import frc.robot.commands.neck.MoveUpNeckCommand;
-import frc.robot.commands.shooting.StartSpinCommand;
+import frc.robot.commands.neck.NeckUpCommand;
+import frc.robot.commands.shooter.StartSpinCommand;
 import frc.robot.subsystems.*;
 
 public class ShootCommandGroup extends SequentialCommandGroup {
@@ -16,7 +16,7 @@ public class ShootCommandGroup extends SequentialCommandGroup {
                 new StartSpinCommand(shooterSubsystem).withTimeout(2),
                 new ParallelCommandGroup(
                         new HopperInCommand(hopperSubsystem),
-                        new MoveUpNeckCommand(neckSubsystem),
+                        new NeckUpCommand(neckSubsystem),
                         new IntakeInCommand(intakeSubsytem)
                 )
         );

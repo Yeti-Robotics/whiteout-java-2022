@@ -26,10 +26,10 @@ public final class Constants {
         public static final int LEFT_FALCON_1 = 15;
         public static final int LEFT_FALCON_2 = 14;
         public static final int RIGHT_FALCON_1 = 0;
-        public static final int RIGHT_FALCON_2 =1;
+        public static final int RIGHT_FALCON_2 = 1;
 
         //shifter solenoid ports
-        public static final int[] SHIFTER_SOLENOID = {0,1};
+        public static final int[] SHIFTER_SOLENOID = {0,2};
 
         //pid drive constants
         public static final double kTurnP = 1;
@@ -51,7 +51,7 @@ public final class Constants {
         public static final int INTAKE_VICTOR = 5;
 
         //intake piston solenoid ports
-        public static final int[] INTAKE_PISTONS_SOLENOID = {2, 3};
+        public static final int[] INTAKE_PISTONS_SOLENOID = {1, 3};
 
         //intake motor speed
         public static final double ROLL_IN_SPEED = 1.0;
@@ -60,8 +60,7 @@ public final class Constants {
 
     public static final class HopperConstants {
         //hopper motor ports
-        public static final int HOPPER_LEFT_VICTOR = 12;
-        public static final int HOPPER_RIGHT_VICTOR = 6;
+        public static final int HOPPER_VICTOR = 4;
 
         //hopper motor speed
         public static final double FUNNEL_IN_SPEED = 0.75;
@@ -70,15 +69,14 @@ public final class Constants {
 
     public static final class NeckConstants{
         //neck motor ports
-        public static final int NECK_BELT_TALON = 8;
-        public static final int NECK_ROLLER_TALON = 11;
+        public static final int NECK_BELT_VICTOR = 8;
+        public static final int NECK_ROLLER_VICTOR = 11;
 
         //beam break sensor dio ports
-        public static final int UPPER_BEAM_BREAK = 5;
-        public static final int LOWER_BEAM_BREAK = 6;
+        public static final int NECK_BEAM_BREAK = 2;
 
         //neck motor speed
-        public static final double NECK_UP_SPEED = 0.5;
+        public static final double NECK_UP_SPEED = 0.75;
         public static final double NECK_DOWN_SPEED = -0.5;
     }
 
@@ -87,23 +85,40 @@ public final class Constants {
         public static final int SHOOTER_LEFT_TALON = 9; //left
         public static final int SHOOTER_RIGHT_TALON = 10; //right
 
-        //shooter motor speeds
+        //shooter motor speeds    
         public static final double SHOOT_1_SPEED = .9;
         public static final double SHOOT_2_SPEED = .9;
         public static final double REVERSE_SHOOT_1_SPEED = -0.5;
         public static final double REVERSE_SHOOT_2_SPEED = -0.5;
+
+        //shooter rpm calc constants
+        public static final double PULLEY_RATIO = 12.0 / 48.0;
+        public static final double ENCODER_TIME_CONVERSION = 600.0; // 100 ms per minute
+        public static final double ENCODER_RESOLUTION = 12.0;
+        public static final double QUAD_FACTOR = 4.0; // quadrature encoder factor
+        public static final double MAX_RPM = 1425.0;
     }
 
     public static final class HoodConstants{
         //hood motor port
-        public static final int HOOD_SPARK = 11;
+        public static final int HOOD_SPARK = 7;
+
+        //hood beam break dio
+        public static final int HOOD_BEAM_BREAK = 0;
+
+        //hood angle toggle
+        public static final double BUMP_FIRE_ANGLE = 1.0;
+        public static final double INIT_FIRING_ANGLE = 40.0; //from front ideally, works from behind as well
+
+        //hood speed
+        public static final double HOOD_SPEED = 0.1;
 
         //hood calc constants
         public static final double COUNTS_PER_REVOLUTION = 42.0;
         public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
         public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
-        public static final double HOOD_ANGLE_TOLERANCE = .25;
-        public static final double MAX_HOOD_ANGLE = 30.0;
+        public static final double HOOD_ANGLE_TOLERANCE = 0.2;
+        public static final double MAX_HOOD_ANGLE = 45.0;
     }
 
     public static final class ClimberConstants{
@@ -112,7 +127,7 @@ public final class Constants {
         public static final int CLIMBER_RIGHT_TALON = 2; //right
 
         //climber motor speed
-        public static final double CLIMBER_SPEED = 0.9;
+        public static final double CLIMBER_SPEED = 0.5;
 
         //climber current limiting constants
         public static final int CLIMBER_CONT_CURRENT_LIMIT = 15;
