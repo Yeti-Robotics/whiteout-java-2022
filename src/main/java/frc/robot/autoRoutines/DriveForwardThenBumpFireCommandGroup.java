@@ -28,7 +28,7 @@ public class DriveForwardThenBumpFireCommandGroup extends SequentialCommandGroup
     addCommands(
       // new DriveForDistanceCommand(drivetrainSubsystem, 98.0, drivePower, drivePower),
       new SetHoodAngle(hoodSubsystem, HoodConstants.BUMP_FIRE_ANGLE, HoodConstants.HOOD_SPEED),
-      new DriveForDistanceCommand(drivetrainSubsystem, 60.0, drivePower, drivePower), //test line for distance
+      new DriveForDistanceCommand(drivetrainSubsystem, 60.0, drivePower, drivePower).withTimeout(3.5),
       new WaitCommand(0.5), 
       new StartSpinCommand(shooterSubsystem), 
       new WaitCommand(2.0), 

@@ -123,7 +123,7 @@ public class RobotContainer {
     // top row
     setJoystickButtonWhileHeld(driverStationJoy, 6, new AllOutCommand(intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 7, new IntakeInCommand(intakeSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoy, 8, new TurnToTargetPIDCommand(drivetrainSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoy, 8, new TurnToTargetPIDCommand(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoy, 9, new ToggleHoodAngleCommand(hoodSubsystem, 0.15)); //out
     // setJoystickButtonWhenPressed(driverStationJoy, 9, new SetHoodAngle(hoodSubsystem, HoodConstants.INIT_FIRING_ANGLE, HoodConstants.HOOD_SPEED));
     setJoystickButtonWhileHeld(driverStationJoy, 9, new MoveHoodCommand(hoodSubsystem, HoodConstants.HOOD_SPEED));

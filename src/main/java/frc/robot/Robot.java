@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
     // System.out.println("velocity units: " + robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(robotContainer.shooterSubsystem.getFlywheelRPM())+ "; right encoder value: " + robotContainer.shooterSubsystem.getRightEncoder() +"; flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM() + "; error: " + (robotContainer.shooterSubsystem.getSetPoint() - robotContainer.shooterSubsystem.getFlywheelRPM()));
     // System.out.println("flywheel rpm: " + robotContainer.shooterSubsystem.getFlywheelRPM());
     System.out.println("hood encoder: " + robotContainer.hoodSubsystem.getEncoder());
+    System.out.println("distance from center of target: " + Limelight.getTx());
     CommandScheduler.getInstance().run();
   }
 

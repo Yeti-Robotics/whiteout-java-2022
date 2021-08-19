@@ -33,8 +33,8 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void climbUp(){
-        climberLeftVictor.set(ControlMode.PercentOutput, ClimberConstants.CLIMBER_SPEED);
-        climberRightTalon.set(ControlMode.PercentOutput, ClimberConstants.CLIMBER_SPEED);
+        climberLeftVictor.set(ControlMode.PercentOutput, 1.0);
+        climberRightTalon.set(ControlMode.PercentOutput, 1.0);
     }
 
     public void toggleClimbUp(double power){
