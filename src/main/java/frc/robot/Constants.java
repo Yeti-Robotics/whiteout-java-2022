@@ -123,20 +123,16 @@ public final class Constants {
 
     public static final class ClimberConstants{
         //climber motor constants
-        public static final int CLIMBER_LEFT_VICTOR = 3; //left
-        public static final int CLIMBER_RIGHT_TALON = 2; //right
+        public static final int CLIMBER_LEFT_FALCON = 1337; // placeholder **
+        public static final int CLIMBER_RIGHT_FALCON = 1337; // placeholer **
 
         //climber motor speed
         public static final double CLIMBER_SPEED = 0.5;
 
         //climber current limiting constants
-        public static final int CLIMBER_CONT_CURRENT_LIMIT = 15;
-        public static final int CLIMBER_PEAK_CURRENT_LIMIT = 25;
-        public static final int CLIMBER_PEAK_CURRENT_DURATION = 200;
-
-        //climber limit switch ports
-        public static final int TOP_LIMIT_SWITCH = 1;
-        public static final int BOTTOM_LIMIT_SWITCH = 0;
+        // public static final int CLIMBER_CONT_CURRENT_LIMIT = 15;
+        // public static final int CLIMBER_PEAK_CURRENT_LIMIT = 25;
+        // public static final int CLIMBER_PEAK_CURRENT_DURATION = 200;
     }
 
     public static final class OIConstants{

@@ -1,64 +1,53 @@
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-    private VictorSPX climberLeftVictor;
-    private TalonSRX climberRightTalon;
-    private DigitalInput topLimitSwitch;
-    private DigitalInput bottomLimitSwitch;
+    private WPI_TalonFX climberLeftFalcon;
+    private WPI_TalonFX climberRightFalcon; 
 
     public ClimberSubsystem() {
-        climberLeftVictor = new VictorSPX(ClimberConstants.CLIMBER_LEFT_VICTOR);
-        climberRightTalon = new TalonSRX(ClimberConstants.CLIMBER_RIGHT_TALON);
+        climberLeftFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_LEFT_FALCON);
+        climberRightFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_RIGHT_FALCON);
 
-        climberLeftVictor.setInverted(true);
+        // one of these will likely need to be inverted
+        climberLeftFalcon.setInverted(false);
+        climberRightFalcon.setInverted(false);
 
-        // topLimitSwitch = new DigitalInput(Constants.TOP_LIMIT_SWITCH);
-        // bottomLimitSwitch = new DigitalInput(Constants.BOTTOM_LIMIT_SWITCH);
-
-        climberRightTalon.configContinuousCurrentLimit(ClimberConstants.CLIMBER_CONT_CURRENT_LIMIT);
-        climberRightTalon.configPeakCurrentLimit(ClimberConstants.CLIMBER_PEAK_CURRENT_LIMIT);
-        climberRightTalon.configPeakCurrentDuration(ClimberConstants.CLIMBER_PEAK_CURRENT_DURATION);
-        climberRightTalon.enableCurrentLimit(true);
-        climberRightTalon.follow(climberLeftVictor);
+        climberRightFalcon.follow(climberLeftFalcon);
     }
 
     public void climbUp(){
-        climberLeftVictor.set(ControlMode.PercentOutput, 1.0);
-        climberRightTalon.set(ControlMode.PercentOutput, 1.0);
-    }
-
-    public void toggleClimbUp(double power){
-        climberLeftVictor.set(ControlMode.PercentOutput, power);
-        climberRightTalon.set(ControlMode.PercentOutput, power);
+        climberLeftFalcon.set(ControlMode.PercentOutput, ClimberConstants.CLIMBER_SPEED);
     }
 
     public void climbDown(){
-        climberLeftVictor.set(ControlMode.PercentOutput, -1.0);
-        climberRightTalon.set(ControlMode.PercentOutput, -1.0);
+        climberLeftFalcon.set(ControlMode.PercentOutput, -ClimberConstants.CLIMBER_SPEED);
     }
 
     public void stopClimb(){
-        climberLeftVictor.set(ControlMode.PercentOutput, 0);
-        climberRightTalon.set(ControlMode.PercentOutput, 0);
+        climberLeftFalcon.set(ControlMode.PercentOutput, 0.0);
     }
 
-    public boolean getTopLimitSwitch(){
-        return topLimitSwitch.get();
+    public double getLeftEncoder(){
+        return climberLeftFalcon.getSelectedSensorVelocity(); 
     }
 
-    public boolean getBottomLimitSwitch(){
-        return bottomLimitSwitch.get();
+    public double getRightEncoder(){
+        return climberRightFalcon.getSelectedSensorVelocity();
     }
 
+    public double getAverageEncoder(){
+        return (getLeftEncoder() + getRightEncoder()) / 2.0;
+    }
+
+    public void resetEncoders(){
+        climberLeftFalcon.setSelectedSensorPosition(0);
+        climberRightFalcon.setSelectedSensorPosition(0);
+    }
 }
-
