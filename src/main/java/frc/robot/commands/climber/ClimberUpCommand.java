@@ -1,6 +1,7 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 
 
@@ -25,7 +26,7 @@ public class ClimberUpCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return climberSubsystem.getAverageEncoder() >= ClimberConstants.CLIMBER_UPPER_LIMIT - ClimberConstants.CLIMBER_TOLERANCE;
     }
 
     @Override

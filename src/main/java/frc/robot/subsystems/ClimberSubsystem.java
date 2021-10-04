@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +22,19 @@ public class ClimberSubsystem extends SubsystemBase {
         climberRightFalcon.setInverted(false);
 
         climberRightFalcon.follow(climberLeftFalcon);
+
+        climberLeftFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        climberRightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
+        // set neutral to brake to make sure falcons don't move (holding the climb)
+        climberLeftFalcon.setNeutralMode(NeutralMode.Brake);
+        climberRightFalcon.setNeutralMode(NeutralMode.Brake);
+    }
+
+    @Override
+    public void periodic() {
+        System.out.println("climber encoder: " + getAverageEncoder());
+        System.out.println("encoder pos (test): " + ((climberLeftFalcon.getSelectedSensorPosition() + climberRightFalcon.getSelectedSensorPosition()) / 2.0));
     }
 
     public void climbUp(){

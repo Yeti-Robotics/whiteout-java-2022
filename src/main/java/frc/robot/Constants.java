@@ -129,6 +129,11 @@ public final class Constants {
         //climber motor speed
         public static final double CLIMBER_SPEED = 0.5;
 
+        // climber limits
+        public static final double CLIMBER_LOWER_LIMIT = 0.0;
+        public static final double CLIMBER_UPPER_LIMIT = 100.0; // 100.0 == placeholder
+        public static final double CLIMBER_TOLERANCE = 5;
+
         //climber current limiting constants
         // public static final int CLIMBER_CONT_CURRENT_LIMIT = 15;
         // public static final int CLIMBER_PEAK_CURRENT_LIMIT = 25;
