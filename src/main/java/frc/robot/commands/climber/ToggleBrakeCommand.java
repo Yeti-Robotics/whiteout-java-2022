@@ -17,11 +17,7 @@ public class ToggleBrakeCommand extends CommandBase {
 
   @Override
   public void initialize(){
-    if(climberSubsystem.getBrakeStatus() == ClimberSubsystem.BrakeStatus.DISABLED){
-      climberSubsystem.enableBrake();
-    } else {
-      climberSubsystem.disableBrake();
-    }
+    climberSubsystem.toggleBrake();
   }
 
   @Override

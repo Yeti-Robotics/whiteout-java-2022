@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
@@ -15,21 +16,14 @@ public class ClimberSubsystem extends SubsystemBase {
     private WPI_TalonFX climberRightFalcon; 
     private DoubleSolenoid climberBrake; 
 
-    public static enum BrakeStatus {
-        ENABLED, DISABLED
-    }
-
-    private BrakeStatus brakeStatus;
-
     public ClimberSubsystem() {
         climberLeftFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_LEFT_FALCON);
         climberRightFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_RIGHT_FALCON);
         climberBrake = new DoubleSolenoid(ClimberConstants.CLIMBER_BRAKE_SOLENOID[0], ClimberConstants.CLIMBER_BRAKE_SOLENOID[1]);
 
-        brakeStatus = BrakeStatus.DISABLED;
-
         climberLeftFalcon.setInverted(true);
         climberRightFalcon.setInverted(true);
+        climberBrake.set(Value.kReverse); // set value for toggling; assume reverse position on startup
 
         climberRightFalcon.follow(climberLeftFalcon);
 
@@ -76,17 +70,7 @@ public class ClimberSubsystem extends SubsystemBase {
         climberRightFalcon.setSelectedSensorPosition(0);
     }
 
-    public void enableBrake(){
-        climberBrake.set(DoubleSolenoid.Value.kForward);
-        brakeStatus = BrakeStatus.ENABLED;
-    }
-
-    public void disableBrake(){
-        climberBrake.set(DoubleSolenoid.Value.kReverse);
-        brakeStatus = BrakeStatus.DISABLED;
-    }
-
-    public BrakeStatus getBrakeStatus(){
-        return brakeStatus;
+    public void toggleBrake(){
+        climberBrake.toggle();
     }
 }
