@@ -20,6 +20,7 @@ import frc.robot.commands.AllOutCommand;
 import frc.robot.commands.climber.ClimberDownCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.climber.ClimberUpCommand;
+import frc.robot.commands.climber.ToggleBrakeCommand;
 import frc.robot.commands.drivetrain.TurnToTargetPIDCommand;
 import frc.robot.commands.groups.AimToShootCommandGroup;
 import frc.robot.commands.hood.MoveHoodCommand;
@@ -113,7 +114,10 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(driverStationJoy, 2, new ToggleShooterCommand(shooterSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 3, new NeckClearCommand(neckSubsystem)); //Change from while held to when pressed, just have to figure out the correct time value
     // setJoystickButtonWhenPressed(driverStationJoy, 4, new SetHoodAngle(hoodSubsystem, HoodConstants.BUMP_FIRE_ANGLE, HoodConstants.HOOD_SPEED));
-    setJoystickButtonWhileHeld(driverStationJoy, 4, new MoveHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED));
+    // setJoystickButtonWhileHeld(driverStationJoy, 4, new MoveHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED));
+
+    setJoystickButtonWhenPressed(driverStationJoy, 4, new ToggleBrakeCommand(climberSubsystem)); // temp for testing????
+
     // setJoystickButtonWhenPressed(driverStationJoy, 4, new FireThreeThenForwardCommandGroup(0.5, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem, drivetrainSubsystem, hoodSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoy, 4, new DriveForwardThenBumpFireCommandGroup(0.5, drivetrainSubsystem, shooterSubsystem, intakeSubsystem, hopperSubsystem, neckSubsystem));
     setJoystickButtonWhileHeld(driverStationJoy, 5, new ClimberDownCommand(climberSubsystem));

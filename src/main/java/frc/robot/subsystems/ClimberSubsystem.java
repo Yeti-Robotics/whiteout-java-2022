@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
@@ -12,21 +13,30 @@ public class ClimberSubsystem extends SubsystemBase {
 
     private WPI_TalonFX climberLeftFalcon;
     private WPI_TalonFX climberRightFalcon; 
+    private DoubleSolenoid climberBrake; 
+
+    public static enum BrakeStatus {
+        ENABLED, DISABLED
+    }
+
+    private BrakeStatus brakeStatus;
 
     public ClimberSubsystem() {
         climberLeftFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_LEFT_FALCON);
         climberRightFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_RIGHT_FALCON);
+        climberBrake = new DoubleSolenoid(ClimberConstants.CLIMBER_BRAKE_SOLENOID[0], ClimberConstants.CLIMBER_BRAKE_SOLENOID[1]);
 
-        // one of these will likely need to be inverted
-        climberLeftFalcon.setInverted(false);
-        climberRightFalcon.setInverted(false);
+        brakeStatus = BrakeStatus.DISABLED;
+
+        climberLeftFalcon.setInverted(true);
+        climberRightFalcon.setInverted(true);
 
         climberRightFalcon.follow(climberLeftFalcon);
 
         climberLeftFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         climberRightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-        // set neutral to brake to make sure falcons don't move (holding the climb)
+        // set neutral to brake to make sure falcons don't move (redundancy)
         climberLeftFalcon.setNeutralMode(NeutralMode.Brake);
         climberRightFalcon.setNeutralMode(NeutralMode.Brake);
     }
@@ -64,5 +74,19 @@ public class ClimberSubsystem extends SubsystemBase {
     public void resetEncoders(){
         climberLeftFalcon.setSelectedSensorPosition(0);
         climberRightFalcon.setSelectedSensorPosition(0);
+    }
+
+    public void enableBrake(){
+        climberBrake.set(DoubleSolenoid.Value.kForward);
+        brakeStatus = BrakeStatus.ENABLED;
+    }
+
+    public void disableBrake(){
+        climberBrake.set(DoubleSolenoid.Value.kReverse);
+        brakeStatus = BrakeStatus.DISABLED;
+    }
+
+    public BrakeStatus getBrakeStatus(){
+        return brakeStatus;
     }
 }

@@ -122,12 +122,13 @@ public final class Constants {
     }
 
     public static final class ClimberConstants{
-        //climber motor constants
-        public static final int CLIMBER_LEFT_FALCON = 1337; // placeholder **
-        public static final int CLIMBER_RIGHT_FALCON = 1337; // placeholer **
+        //climber motor & solenoid constants
+        public static final int CLIMBER_LEFT_FALCON = 3;
+        public static final int CLIMBER_RIGHT_FALCON = 2;
+        public static final int[] CLIMBER_BRAKE_SOLENOID = {4, 5};
 
         //climber motor speed
-        public static final double CLIMBER_SPEED = 0.5;
+        public static final double CLIMBER_SPEED = 0.1;
 
         // climber limits
         public static final double CLIMBER_LOWER_LIMIT = 0.0;

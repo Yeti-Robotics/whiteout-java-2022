@@ -32,6 +32,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     leftFalcon2.follow(leftFalcon1);
     leftFalcon2.setInverted(InvertType.FollowMaster);
+    rightFalcon1.setInverted(true);
     rightFalcon2.follow(rightFalcon1);
     rightFalcon2.setInverted(InvertType.FollowMaster);
 
