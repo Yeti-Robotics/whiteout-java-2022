@@ -11,7 +11,7 @@ import frc.robot.subsystems.*;
 
 public class ShootCommandGroup extends SequentialCommandGroup {
     public ShootCommandGroup(ShooterSubsystem shooterSubsystem, HopperSubsystem hopperSubsystem, NeckSubsystem neckSubsystem, IntakeSubsystem intakeSubsytem) {
-            super();
+        super();
         addCommands(
                 new StartSpinCommand(shooterSubsystem).withTimeout(2),
                 new ParallelCommandGroup(

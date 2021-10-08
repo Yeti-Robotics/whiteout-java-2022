@@ -2,6 +2,7 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClimberConstants;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.subsystems.ClimberSubsystem;
 
 
@@ -21,12 +22,14 @@ public class ClimberUpCommand extends CommandBase {
 
     @Override
     public void execute() {
-        climberSubsystem.climbUp();
+        if(!(climberSubsystem.getAverageEncoder() >= ClimberConstants.CLIMBER_UPPER_LIMIT - ClimberConstants.CLIMBER_TOLERANCE || climberSubsystem.getSolenoidPos() == Value.kForward)){
+            climberSubsystem.climbUp();
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return climberSubsystem.getAverageEncoder() >= ClimberConstants.CLIMBER_UPPER_LIMIT - ClimberConstants.CLIMBER_TOLERANCE;
+        return climberSubsystem.getAverageEncoder() >= ClimberConstants.CLIMBER_UPPER_LIMIT - ClimberConstants.CLIMBER_TOLERANCE || climberSubsystem.getSolenoidPos() == Value.kForward;
     }
 
     @Override

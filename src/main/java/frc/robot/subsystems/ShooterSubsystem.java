@@ -103,5 +103,6 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         distance = Limelight.getHorDistance();
+        // System.out.println("flywheel RPM: " + getFlywheelRPM());
     }
 }

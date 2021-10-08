@@ -37,8 +37,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println("climber encoder: " + getAverageEncoder());
-        System.out.println("encoder pos (test): " + ((climberLeftFalcon.getSelectedSensorPosition() + climberRightFalcon.getSelectedSensorPosition()) / 2.0));
+        // System.out.println("climber encoder: " + getAverageEncoder());
+        // System.out.println("solenoid: " + climberBrake.get());
     }
 
     public void climbUp(){
@@ -54,11 +54,11 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public double getLeftEncoder(){
-        return climberLeftFalcon.getSelectedSensorVelocity(); 
+        return climberLeftFalcon.getSelectedSensorPosition(); 
     }
 
     public double getRightEncoder(){
-        return climberRightFalcon.getSelectedSensorVelocity();
+        return climberRightFalcon.getSelectedSensorPosition();
     }
 
     public double getAverageEncoder(){
@@ -72,5 +72,9 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public void toggleBrake(){
         climberBrake.toggle();
+    }
+
+    public DoubleSolenoid.Value getSolenoidPos(){
+        return climberBrake.get(); // returns kOff, kForward, or kReverse
     }
 }

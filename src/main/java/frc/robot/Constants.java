@@ -117,8 +117,8 @@ public final class Constants {
         public static final double COUNTS_PER_REVOLUTION = 42.0;
         public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
         public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
-        public static final double HOOD_ANGLE_TOLERANCE = 0.2;
-        public static final double MAX_HOOD_ANGLE = 45.0;
+        public static final double HOOD_ANGLE_TOLERANCE = 0.5;
+        public static final double MAX_HOOD_ANGLE = 40.0;
     }
 
     public static final class ClimberConstants{
@@ -128,17 +128,12 @@ public final class Constants {
         public static final int[] CLIMBER_BRAKE_SOLENOID = {4, 5};
 
         //climber motor speed
-        public static final double CLIMBER_SPEED = 0.1;
+        public static final double CLIMBER_SPEED = 0.4;
 
         // climber limits
         public static final double CLIMBER_LOWER_LIMIT = 0.0;
-        public static final double CLIMBER_UPPER_LIMIT = 100.0; // 100.0 == placeholder
-        public static final double CLIMBER_TOLERANCE = 5;
-
-        //climber current limiting constants
-        // public static final int CLIMBER_CONT_CURRENT_LIMIT = 15;
-        // public static final int CLIMBER_PEAK_CURRENT_LIMIT = 25;
-        // public static final int CLIMBER_PEAK_CURRENT_DURATION = 200;
+        public static final double CLIMBER_UPPER_LIMIT = 108752.5;
+        public static final double CLIMBER_TOLERANCE = 15.0;
     }
 
     public static final class OIConstants{
@@ -149,6 +144,7 @@ public final class Constants {
 
         //driverstation port (the whole thing is one joystick, we read from four axis)
         public static final int DRIVER_STATION_JOY = 0;
+        public static final int CLIMBER_JOY = 1;
     }
 
     public static final class CalcConstants{

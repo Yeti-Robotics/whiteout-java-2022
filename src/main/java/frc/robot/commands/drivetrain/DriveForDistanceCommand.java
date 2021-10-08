@@ -26,7 +26,7 @@ public class DriveForDistanceCommand extends CommandBase {
     @Override
     public void execute() {
         drivetrainSubsystem.tankDrive(leftPower, rightPower);
-        System.out.println("Distance" + distanceGoal + "; Encoder" + this.drivetrainSubsystem.getAverageEncoder());
+        System.out.println("Distance: " + distanceGoal + "; Encoder: " + this.drivetrainSubsystem.getAverageEncoder());
     }
 
     @Override

@@ -28,7 +28,7 @@ public class HoodSubsystem extends SubsystemBase {
   public HoodSubsystem() {
     hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  
     hoodEncoder = hoodSpark.getEncoder();
-    beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
+    beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
     hoodSpark.setInverted(false);
     hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
     hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0.0));
@@ -37,7 +37,7 @@ public class HoodSubsystem extends SubsystemBase {
   @Override
 
   public void periodic() {
-    // if(beamBreak.get()) hoodStatus = HoodStatus.LOWER_LIMIT;
+    System.out.println("hood encoder: " + getEncoder());
   }
 
   public void moveHood(double power) {
