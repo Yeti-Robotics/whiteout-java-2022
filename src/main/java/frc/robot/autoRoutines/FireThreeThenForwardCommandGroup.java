@@ -40,7 +40,8 @@ public class FireThreeThenForwardCommandGroup extends SequentialCommandGroup {
       new WaitCommand(1.0), 
       new AllInCommand(intakeSubsystem, hopperSubsystem, neckSubsystem).withTimeout(0.5), 
       new StopSpinCommand(shooterSubsystem),
-      new DriveForDistanceCommand(drivetrainSubsystem, 10.0, drivePower, drivePower)
+      new DriveForDistanceCommand(drivetrainSubsystem, 10.0, drivePower, drivePower).withTimeout(2.0), 
+      new SetHoodAngle(hoodSubsystem, HoodConstants.BUMP_FIRE_ANGLE, HoodConstants.HOOD_SPEED)
     );
   }
 }

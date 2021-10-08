@@ -1,64 +1,80 @@
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-    private VictorSPX climberLeftVictor;
-    private TalonSRX climberRightTalon;
-    private DigitalInput topLimitSwitch;
-    private DigitalInput bottomLimitSwitch;
+    private WPI_TalonFX climberLeftFalcon;
+    private WPI_TalonFX climberRightFalcon; 
+    private DoubleSolenoid climberBrake; 
 
     public ClimberSubsystem() {
-        climberLeftVictor = new VictorSPX(ClimberConstants.CLIMBER_LEFT_VICTOR);
-        climberRightTalon = new TalonSRX(ClimberConstants.CLIMBER_RIGHT_TALON);
+        climberLeftFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_LEFT_FALCON);
+        climberRightFalcon = new WPI_TalonFX(ClimberConstants.CLIMBER_RIGHT_FALCON);
+        climberBrake = new DoubleSolenoid(ClimberConstants.CLIMBER_BRAKE_SOLENOID[0], ClimberConstants.CLIMBER_BRAKE_SOLENOID[1]);
 
-        climberLeftVictor.setInverted(true);
+        climberLeftFalcon.setInverted(true);
+        climberRightFalcon.setInverted(true);
+        climberBrake.set(Value.kReverse); // set value for toggling; assume reverse position on startup
 
-        // topLimitSwitch = new DigitalInput(Constants.TOP_LIMIT_SWITCH);
-        // bottomLimitSwitch = new DigitalInput(Constants.BOTTOM_LIMIT_SWITCH);
+        climberRightFalcon.follow(climberLeftFalcon);
 
-        climberRightTalon.configContinuousCurrentLimit(ClimberConstants.CLIMBER_CONT_CURRENT_LIMIT);
-        climberRightTalon.configPeakCurrentLimit(ClimberConstants.CLIMBER_PEAK_CURRENT_LIMIT);
-        climberRightTalon.configPeakCurrentDuration(ClimberConstants.CLIMBER_PEAK_CURRENT_DURATION);
-        climberRightTalon.enableCurrentLimit(true);
-        climberRightTalon.follow(climberLeftVictor);
+        climberLeftFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        climberRightFalcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
+        // set neutral to brake to make sure falcons don't move (redundancy)
+        climberLeftFalcon.setNeutralMode(NeutralMode.Brake);
+        climberRightFalcon.setNeutralMode(NeutralMode.Brake);
+    }
+
+    @Override
+    public void periodic() {
+        // System.out.println("climber encoder: " + getAverageEncoder());
+        // System.out.println("solenoid: " + climberBrake.get());
     }
 
     public void climbUp(){
-        climberLeftVictor.set(ControlMode.PercentOutput, 1.0);
-        climberRightTalon.set(ControlMode.PercentOutput, 1.0);
-    }
-
-    public void toggleClimbUp(double power){
-        climberLeftVictor.set(ControlMode.PercentOutput, power);
-        climberRightTalon.set(ControlMode.PercentOutput, power);
+        climberLeftFalcon.set(ControlMode.PercentOutput, ClimberConstants.CLIMBER_SPEED);
     }
 
     public void climbDown(){
-        climberLeftVictor.set(ControlMode.PercentOutput, -1.0);
-        climberRightTalon.set(ControlMode.PercentOutput, -1.0);
+        climberLeftFalcon.set(ControlMode.PercentOutput, -ClimberConstants.CLIMBER_SPEED);
     }
 
     public void stopClimb(){
-        climberLeftVictor.set(ControlMode.PercentOutput, 0);
-        climberRightTalon.set(ControlMode.PercentOutput, 0);
+        climberLeftFalcon.set(ControlMode.PercentOutput, 0.0);
     }
 
-    public boolean getTopLimitSwitch(){
-        return topLimitSwitch.get();
+    public double getLeftEncoder(){
+        return climberLeftFalcon.getSelectedSensorPosition(); 
     }
 
-    public boolean getBottomLimitSwitch(){
-        return bottomLimitSwitch.get();
+    public double getRightEncoder(){
+        return climberRightFalcon.getSelectedSensorPosition();
     }
 
+    public double getAverageEncoder(){
+        return (getLeftEncoder() + getRightEncoder()) / 2.0;
+    }
+
+    public void resetEncoders(){
+        climberLeftFalcon.setSelectedSensorPosition(0);
+        climberRightFalcon.setSelectedSensorPosition(0);
+    }
+
+    public void toggleBrake(){
+        climberBrake.toggle();
+    }
+
+    public DoubleSolenoid.Value getSolenoidPos(){
+        return climberBrake.get(); // returns kOff, kForward, or kReverse
+    }
 }
-

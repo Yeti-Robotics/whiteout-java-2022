@@ -117,26 +117,23 @@ public final class Constants {
         public static final double COUNTS_PER_REVOLUTION = 42.0;
         public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
         public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
-        public static final double HOOD_ANGLE_TOLERANCE = 0.2;
-        public static final double MAX_HOOD_ANGLE = 45.0;
+        public static final double HOOD_ANGLE_TOLERANCE = 0.5;
+        public static final double MAX_HOOD_ANGLE = 40.0;
     }
 
     public static final class ClimberConstants{
-        //climber motor constants
-        public static final int CLIMBER_LEFT_VICTOR = 3; //left
-        public static final int CLIMBER_RIGHT_TALON = 2; //right
+        //climber motor & solenoid constants
+        public static final int CLIMBER_LEFT_FALCON = 3;
+        public static final int CLIMBER_RIGHT_FALCON = 2;
+        public static final int[] CLIMBER_BRAKE_SOLENOID = {4, 5};
 
         //climber motor speed
-        public static final double CLIMBER_SPEED = 0.5;
+        public static final double CLIMBER_SPEED = 0.4;
 
-        //climber current limiting constants
-        public static final int CLIMBER_CONT_CURRENT_LIMIT = 15;
-        public static final int CLIMBER_PEAK_CURRENT_LIMIT = 25;
-        public static final int CLIMBER_PEAK_CURRENT_DURATION = 200;
-
-        //climber limit switch ports
-        public static final int TOP_LIMIT_SWITCH = 1;
-        public static final int BOTTOM_LIMIT_SWITCH = 0;
+        // climber limits
+        public static final double CLIMBER_LOWER_LIMIT = 0.0;
+        public static final double CLIMBER_UPPER_LIMIT = 108752.5;
+        public static final double CLIMBER_TOLERANCE = 15.0;
     }
 
     public static final class OIConstants{
@@ -147,6 +144,7 @@ public final class Constants {
 
         //driverstation port (the whole thing is one joystick, we read from four axis)
         public static final int DRIVER_STATION_JOY = 0;
+        public static final int CLIMBER_JOY = 1;
     }
 
     public static final class CalcConstants{

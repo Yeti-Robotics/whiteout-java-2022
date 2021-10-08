@@ -32,6 +32,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     leftFalcon2.follow(leftFalcon1);
     leftFalcon2.setInverted(InvertType.FollowMaster);
+    rightFalcon1.setInverted(false);
     rightFalcon2.follow(rightFalcon1);
     rightFalcon2.setInverted(InvertType.FollowMaster);
 
@@ -49,7 +50,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic(){
-    // System.out.println(getAngle());
   }
 
   public void tankDrive(double leftpower, double rightpower) {
